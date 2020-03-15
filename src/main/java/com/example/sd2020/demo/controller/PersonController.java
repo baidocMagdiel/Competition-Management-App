@@ -53,7 +53,7 @@ public class PersonController {
             ((Athlete) newPerson).setBloodType(bloodType);
             ((Athlete) newPerson).setWorldRanking(worldRanking);
         }
-
+        
         personRepository.save(newPerson);
         return personRepository.findAll();
     }
