@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/person")
+@RequestMapping(value="/person")
 public class PersonController {
     private PersonRepository personRepository;
 
@@ -17,7 +17,7 @@ public class PersonController {
         this.personRepository = personRepository;
     }
 
-    @PostMapping("/create")
+    @PostMapping(value="/create")
     @ResponseBody
     public List<Person> create(@RequestParam String personType,
                                @RequestParam String firstName,
@@ -31,6 +31,7 @@ public class PersonController {
                                @RequestParam(defaultValue = "10 Kyu") String danDegree,
                                @RequestParam(defaultValue = "0") int worldRanking,
                                @RequestParam(defaultValue = "A0") String bloodType){
+
         PersonFactory personFactory = new PersonFactory();
         Person newPerson = personFactory.getPerson(personType);
 
@@ -53,6 +54,23 @@ public class PersonController {
             ((Athlete) newPerson).setWorldRanking(worldRanking);
         }
 
+        personRepository.save(newPerson);
         return personRepository.findAll();
     }
+
+    @GetMapping(value="/deleteAll")
+    public String deleteAll(){
+        try{
+            personRepository.deleteAll();
+        } catch(Exception ex){
+            return "[Error] The records were not deleted. " + ex.getMessage();
+        }
+        return "The records have been deleted.";
+    }
+
+    @GetMapping(value="/findAll")
+    public List<Person> findAll(){
+        return personRepository.findAll();
+    }
+
 }
