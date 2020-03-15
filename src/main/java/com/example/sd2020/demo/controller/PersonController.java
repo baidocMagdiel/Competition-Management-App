@@ -53,7 +53,7 @@ public class PersonController {
             ((Athlete) newPerson).setBloodType(bloodType);
             ((Athlete) newPerson).setWorldRanking(worldRanking);
         }
-        
+
         personRepository.save(newPerson);
         return personRepository.findAll();
     }
@@ -70,6 +70,7 @@ public class PersonController {
 
     @GetMapping(value="/findAll")
     public List<Person> findAll(){
+
         return personRepository.findAll();
     }
 
