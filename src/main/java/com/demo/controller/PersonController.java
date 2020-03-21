@@ -1,7 +1,7 @@
-package com.example.sd2020.demo.controller;
+package com.demo.controller;
 
-import com.example.sd2020.demo.entity.*;
-import com.example.sd2020.demo.repository.PersonRepository;
+import com.demo.entity.Person;
+import com.demo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +13,8 @@ public class PersonController {
     private PersonRepository personRepository;
 
     @Autowired
-    public PersonController(PersonRepository personRepository) {
-        this.personRepository = personRepository;
+    public PersonController() {
+        this.personRepository = new PersonRepository();
     }
 
     @PostMapping(value="/create")
@@ -32,9 +32,9 @@ public class PersonController {
                                @RequestParam(defaultValue = "0") int worldRanking,
                                @RequestParam(defaultValue = "A0") String bloodType){
 
-        PersonFactory personFactory = new PersonFactory();
-        Person newPerson = personFactory.getPerson(personType);
+        Person newPerson = new Person();
 
+        newPerson.setDtype(personType);
         newPerson.setFirstName(firstName);
         newPerson.setSurname(surname);
         newPerson.setAddress(address);
@@ -42,20 +42,20 @@ public class PersonController {
         newPerson.setEmail(email);
         newPerson.setGender(gender);
 
-        if(newPerson instanceof Coach){
-            ((Coach) newPerson).setClubId(clubId);
+        if(personType.equals("Coach")){
+            newPerson.setClubId(clubId);
         }
-        if(newPerson instanceof Athlete){
-            ((Athlete) newPerson).setClubId(clubId);
-            ((Athlete) newPerson).setBloodType(bloodType);
-            ((Athlete) newPerson).setWeight(weight);
-            ((Athlete) newPerson).setDanDegree(danDegree);
-            ((Athlete) newPerson).setBloodType(bloodType);
-            ((Athlete) newPerson).setWorldRanking(worldRanking);
+        if(personType.equals("Athlete")){
+            newPerson.setClubId(clubId);
+            newPerson.setBloodType(bloodType);
+            newPerson.setWeight(weight);
+            newPerson.setDanDegree(danDegree);
+            newPerson.setBloodType(bloodType);
+            newPerson.setWorldRanking(worldRanking);
         }
 
-        personRepository.save(newPerson);
-        return personRepository.findAll();
+        personRepository.insert(newPerson);
+        return personRepository.findAll("*");
     }
 
     @GetMapping(value="/deleteAll")
@@ -71,7 +71,7 @@ public class PersonController {
     @GetMapping(value="/findAll")
     public List<Person> findAll(){
 
-        return personRepository.findAll();
+        return personRepository.findAll("*");
     }
 
 }

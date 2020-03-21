@@ -1,8 +1,7 @@
-package com.example.sd2020.demo.controller;
+package com.demo.controller;
 
-import com.example.sd2020.demo.entity.Autentification;
-import com.example.sd2020.demo.entity.Person;
-import com.example.sd2020.demo.repository.AutentificationRepository;
+import com.demo.entity.Autentification;
+import com.demo.repository.AutentificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,7 @@ public class AutentificationController {
     private AutentificationRepository autentificationRepository;
 
     @Autowired
-    public AutentificationController(AutentificationRepository autentificationRepository) { this.autentificationRepository = autentificationRepository; }
+    public AutentificationController() { this.autentificationRepository = new AutentificationRepository(); }
 
     @PostMapping(value="/create")
     @ResponseBody
@@ -26,9 +25,9 @@ public class AutentificationController {
         newAutentification.setEmail(email);
         newAutentification.setPassword(password);
 
-        autentificationRepository.save(newAutentification);
+        autentificationRepository.insert(newAutentification);
 
-        return autentificationRepository.findAll();
+        return autentificationRepository.findAll("*");
     }
 
     @GetMapping(value="/deleteAll")
@@ -44,6 +43,6 @@ public class AutentificationController {
     @GetMapping(value="/findAll")
     public List<Autentification> findAll(){
 
-        return autentificationRepository.findAll();
+        return autentificationRepository.findAll("*");
     }
 }

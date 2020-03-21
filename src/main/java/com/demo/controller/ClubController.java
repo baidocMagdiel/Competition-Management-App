@@ -1,7 +1,7 @@
-package com.example.sd2020.demo.controller;
+package com.demo.controller;
 
-import com.example.sd2020.demo.entity.Club;
-import com.example.sd2020.demo.repository.ClubRepository;
+import com.demo.entity.Club;
+import com.demo.repository.ClubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ public class ClubController {
     private ClubRepository clubRepository;
 
     @Autowired
-    public ClubController(ClubRepository clubRepository) { this.clubRepository = clubRepository; }
+    public ClubController() { this.clubRepository = new ClubRepository(); }
 
     @PostMapping(value = "/create")
     @ResponseBody
@@ -27,8 +27,8 @@ public class ClubController {
         newClub.setClubId(clubId);
         newClub.setName(name);
 
-        clubRepository.save(newClub);
-        return clubRepository.findAll();
+        clubRepository.insert(newClub);
+        return clubRepository.findAll("*");
     }
 
     @GetMapping(value="/deleteAll")
@@ -44,6 +44,6 @@ public class ClubController {
     @GetMapping(value="/findAll")
     public List<Club> findAll(){
 
-        return clubRepository.findAll();
+        return clubRepository.findAll("*");
     }
 }

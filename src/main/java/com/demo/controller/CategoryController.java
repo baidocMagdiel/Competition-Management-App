@@ -1,7 +1,7 @@
-package com.example.sd2020.demo.controller;
+package com.demo.controller;
 
-import com.example.sd2020.demo.entity.*;
-import com.example.sd2020.demo.repository.CategoryRepository;
+import com.demo.entity.Category;
+import com.demo.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ public class CategoryController {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    public CategoryController(CategoryRepository categoryRepository) { this.categoryRepository = categoryRepository; }
+    public CategoryController() { this.categoryRepository = new CategoryRepository(); }
 
     @PostMapping(value = "/create")
     @ResponseBody
@@ -24,21 +24,22 @@ public class CategoryController {
                                  @RequestParam(defaultValue = "8-35") String weightRange,
                                  @RequestParam(defaultValue = "5") int noOfTeamMembers,
                                  @RequestParam(defaultValue = "3") int noOfMatches){
-        CategoryFactory categoryFactory = new CategoryFactory();
-        Category newCategory = categoryFactory.getCategory(categoryType);
 
+        Category newCategory = new Category();
+
+        newCategory.setDtype(categoryType);
         newCategory.setName(name);
         newCategory.setAgeRange(ageRange);
         newCategory.setMatchTime(matchTime);
         if(categoryType.equals("Single")){
-            ((SingleCategory)newCategory).setWeightRange(weightRange);
+            newCategory.setWeightRange(weightRange);
         }
         if(categoryType.equals("Team")){
-            ((TeamCategory) newCategory).setNoOfTeamMembers(noOfTeamMembers);
-            ((TeamCategory) newCategory).setNoOfMatches(noOfMatches);
+            newCategory.setNoOfTeamMembers(noOfTeamMembers);
+            newCategory.setNoOfMatches(noOfMatches);
         }
-        categoryRepository.save(newCategory);
-        return categoryRepository.findAll();
+        categoryRepository.insert(newCategory);
+        return categoryRepository.findAll("*");
     }
 
     @GetMapping(value="/deleteAll")
@@ -54,7 +55,7 @@ public class CategoryController {
     @GetMapping(value="/findAll")
     public List<Category> findAll(){
 
-        return categoryRepository.findAll();
+        return categoryRepository.findAll("*");
     }
 
 

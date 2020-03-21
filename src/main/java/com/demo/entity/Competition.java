@@ -1,13 +1,7 @@
-package com.example.sd2020.demo.entity;
+package com.demo.entity;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name="Competition")
 public class Competition {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long competitionId;
     private String name;
     private String date;
@@ -31,13 +25,9 @@ public class Competition {
     public Competition() {
     }
 
-    public long getCompetitionId() {
-        return competitionId;
-    }
+    public long getCompetitionId() { return competitionId; }
 
-    public void setCompetitionId(long competitionId) {
-        this.competitionId = competitionId;
-    }
+    public void setCompetitionId(long competitionId) { this.competitionId = competitionId;}
 
     public String getName() {
         return name;

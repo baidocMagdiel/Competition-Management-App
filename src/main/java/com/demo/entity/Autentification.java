@@ -1,12 +1,7 @@
-package com.example.sd2020.demo.entity;
-import javax.persistence.*;
+package com.demo.entity;
 
-@Entity
-@Table(name="Autentification")
 public class Autentification {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long autentificationId;
     private String email;
     private String password;

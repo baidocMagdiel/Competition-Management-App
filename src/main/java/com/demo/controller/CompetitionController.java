@@ -1,7 +1,7 @@
-package com.example.sd2020.demo.controller;
+package com.demo.controller;
 
-import com.example.sd2020.demo.entity.Competition;
-import com.example.sd2020.demo.repository.CompetitionRepository;
+import com.demo.entity.Competition;
+import com.demo.repository.CompetitionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ public class CompetitionController {
     private CompetitionRepository competitionRepository;
 
     @Autowired
-    public CompetitionController(CompetitionRepository competitionRepository) { this.competitionRepository = competitionRepository; }
+    public CompetitionController() { this.competitionRepository = new CompetitionRepository(); }
 
     @PostMapping(value="/create")
     @ResponseBody
@@ -35,8 +35,8 @@ public class CompetitionController {
         newCompetition.setNoOfEntries(noOfEntries);
         newCompetition.setCompetitionStatus(competitionStatus);
 
-        competitionRepository.save(newCompetition);
-        return competitionRepository.findAll();
+        competitionRepository.insert(newCompetition);
+        return competitionRepository.findAll("*");
     }
 
     @GetMapping(value="/deleteAll")
@@ -52,6 +52,6 @@ public class CompetitionController {
     @GetMapping(value="/findAll")
     public List<Competition> findAll(){
 
-        return competitionRepository.findAll();
+        return competitionRepository.findAll("*");
     }
 }
