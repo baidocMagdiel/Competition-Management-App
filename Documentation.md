@@ -38,17 +38,32 @@ Vizitatorul, adica utilizator temporar,  va avea dreptul de a vizualiza doar rez
 ## **Descrierea soluției**
 ### Diagramele sistemului
 ### Diagrame use case
-#### *Use case Admin*
+#### *Use case Administrator*
+![diagrama use case admin user](diagram/administrator.png)
+#### *Use case Antrenor*
+![diagrama use case antrenor](diagram/antrenor.JPG)
+#### *Use case Manager competiții*
+![diagrama use case manager](diagram/manager.JPG)
+#### *Use case Vizitator*
+![diagrama use case vizitator](diagram/vizitator.png)
 ### **Diagrama principală a arhitecturii**
+![diagrama arhitectura](diagram/diag_principala.png)
 ### **Diagrama de deployment**
+![diagrama deployment](diagram/deployment.JPG)
 ### **Diagrama de clase**
+(in lucru)
 ### **Diagrama de pachete**
+(in lucru)
 ## Design-ul interfeței utilizator
-
-### Design patterns: Observer
-
+(se va dezvolta ulterior)
+### Design patterns: 
+### 1)Observer
+Folosit pentru a anunța antrenorii despre noi competiții adăugate.
+### 2)Facade
+Folosit pentru a realiza conexiunea cu baza de date. Oferă o interfață simplificată a operațiilor asupra bazei de date.
 ### Conexiunea la baza de date
 #### *Diagrama relațională a bazei de date*
+![diagrama database](diagram/database.JPG)
 #### *Descrierea structurii bazei de date*
 Baza de date este alcătuită din 6 tabele ce păstrează date despre utilizatori, sportivi, cluburi, competiții și categorii. Mai există și o tabelă de legătură ce 
 #### *Modul de conexiune la baza de date*
