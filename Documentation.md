@@ -55,9 +55,12 @@ Vizitatorul, adica utilizator temporar,  va avea dreptul de a vizualiza doar rez
 ### **Diagrama de pachete**
 (in lucru)
 ## Design-ul interfeței utilizator
-
-### Design patterns: Observer
-
+(se va dezvolta ulterior)
+### Design patterns: 
+### 1)Observer
+Folosit pentru a anunța antrenorii despre noi competiții adăugate.
+### 2)Facade
+Folosit pentru a realiza conexiunea cu baza de date. Oferă o interfață simplificată a operațiilor asupra bazei de date.
 ### Conexiunea la baza de date
 #### *Diagrama relațională a bazei de date*
 ![diagrama database](diagram/database.JPG)
