@@ -25,6 +25,14 @@ public class Category {
     public Category() {
     }
 
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
+
     public long getCategoryId() {
         return categoryId;
     }
@@ -56,10 +64,6 @@ public class Category {
     public void setMatchTime(float matchTime) {
         this.matchTime = matchTime;
     }
-
-    public String getDtype() { return dtype; }
-
-    public void setDtype(String dtype) { this.dtype = dtype;}
 
     public String getWeightRange() {
         return weightRange;

@@ -25,9 +25,13 @@ public class Competition {
     public Competition() {
     }
 
-    public long getCompetitionId() { return competitionId; }
+    public long getCompetitionId() {
+        return competitionId;
+    }
 
-    public void setCompetitionId(long competitionId) { this.competitionId = competitionId;}
+    public void setCompetitionId(long competitionId) {
+        this.competitionId = competitionId;
+    }
 
     public String getName() {
         return name;

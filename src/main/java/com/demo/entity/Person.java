@@ -35,6 +35,14 @@ public class Person {
     public Person() {
     }
 
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
+
     public long getPersonId() {
         return personId;
     }
@@ -51,28 +59,20 @@ public class Person {
         this.surname = surname;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getGender() {
@@ -91,9 +91,13 @@ public class Person {
         this.birthday = birthday;
     }
 
-    public String getDtype() { return dtype; }
+    public String getEmail() {
+        return email;
+    }
 
-    public void setDtype(String dtype) { this.dtype = dtype; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getClubId() {
         return clubId;

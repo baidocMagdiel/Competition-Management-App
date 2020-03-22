@@ -25,6 +25,14 @@ public class Club {
         this.id = id;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getClubId() {
         return clubId;
     }
@@ -39,13 +47,5 @@ public class Club {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }
