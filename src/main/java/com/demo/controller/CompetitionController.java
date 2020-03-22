@@ -15,6 +15,17 @@ public class CompetitionController {
     @Autowired
     public CompetitionController() { this.competitionRepository = new CompetitionRepository(); }
 
+    /**
+     *Insereaza o noua competitie in tabela
+     * @param name numele competitie
+     * @param date  data
+     * @param place locul de desfasurare
+     * @param federation federatia
+     * @param noOfEntries numarul de intrari in competitie
+     * @param noOfCountries numarul de tari inscrise in competitie
+     * @param competitionStatus statusul competitie
+     * @return lista cu toate inregistrarile din tabela
+     */
     @PostMapping(value="/create")
     @ResponseBody
     public List<Competition> create(@RequestParam String name,
@@ -39,6 +50,10 @@ public class CompetitionController {
         return competitionRepository.findAll("*");
     }
 
+    /**
+     * Stergerea tuturor inregistrarilor din tabela
+     * @return mesaj de eroare sau succes
+     */
     @GetMapping(value="/deleteAll")
     public String deleteAll(){
         try{
@@ -49,6 +64,10 @@ public class CompetitionController {
         return "The records have been deleted.";
     }
 
+    /**
+     * Afisarea tuturor inregistrarilor din tabela
+     * @return mesaj de eroare sau succes
+     */
     @GetMapping(value="/findAll")
     public List<Competition> findAll(){
 

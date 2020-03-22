@@ -15,6 +15,13 @@ public class ClubController {
     @Autowired
     public ClubController() { this.clubRepository = new ClubRepository(); }
 
+    /**
+     * Inserarea unui nou club in bd
+     * @param clubId id-ul clubului
+     * @param name numele clubului
+     * @param address adresa clubului
+     * @return lista cu toate inregistrarile din tabela
+     */
     @PostMapping(value = "/create")
     @ResponseBody
     public List<Club> create(@RequestParam String clubId,
@@ -31,6 +38,10 @@ public class ClubController {
         return clubRepository.findAll("*");
     }
 
+    /**
+     * Stergerea tuturor inregistrarilor din tabela
+     * @return mesaj de eroare sau succes
+     */
     @GetMapping(value="/deleteAll")
     public String deleteAll(){
         try{
@@ -41,6 +52,10 @@ public class ClubController {
         return "The records have been deleted.";
     }
 
+    /**
+     * Afisarea tuturor inregistrarilor din tabela
+     * @return mesaj de eroare sau succes
+     */
     @GetMapping(value="/findAll")
     public List<Club> findAll(){
 

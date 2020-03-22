@@ -17,6 +17,22 @@ public class PersonController {
         this.personRepository = new PersonRepository();
     }
 
+    /**
+     * Insereaza o noua persoana in baza date
+     * @param personType tipul persoanei(administrator, sportiv, manager, antrenor)
+     * @param firstName prenume
+     * @param surname nume de familie
+     * @param address adresa
+     * @param birthday data de nastere
+     * @param email adresa de email
+     * @param gender sex
+     * @param clubId id-ul clubului
+     * @param weight greutate
+     * @param danDegree grad
+     * @param worldRanking loc in clasament
+     * @param bloodType grupa sanguina
+     * @return lista cu toate inregistrarile din tabela
+     */
     @PostMapping(value="/create")
     @ResponseBody
     public List<Person> create(@RequestParam String personType,
@@ -50,7 +66,6 @@ public class PersonController {
             newPerson.setBloodType(bloodType);
             newPerson.setWeight(weight);
             newPerson.setDanDegree(danDegree);
-            newPerson.setBloodType(bloodType);
             newPerson.setWorldRanking(worldRanking);
         }
 
@@ -58,6 +73,10 @@ public class PersonController {
         return personRepository.findAll("*");
     }
 
+    /**
+     * Stergerea tuturor inregistrarilor din tabela
+     * @return mesaj de eroare sau succes
+     */
     @GetMapping(value="/deleteAll")
     public String deleteAll(){
         try{
@@ -68,6 +87,10 @@ public class PersonController {
         return "The records have been deleted.";
     }
 
+    /**
+     * Afisarea tuturor inregistrarilor din tabela
+     * @return mesaj de eroare sau succes
+     */
     @GetMapping(value="/findAll")
     public List<Person> findAll(){
 

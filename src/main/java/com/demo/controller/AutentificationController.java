@@ -15,6 +15,12 @@ public class AutentificationController {
     @Autowired
     public AutentificationController() { this.autentificationRepository = new AutentificationRepository(); }
 
+    /**
+     * Insereaza un nou user(datele de autentificare)
+     * @param email adresa de autentificare
+     * @param password parola
+     * @return lista cu toate inregistrarile din tabela
+     */
     @PostMapping(value="/create")
     @ResponseBody
     public List<Autentification> create(@RequestParam String email,
@@ -30,6 +36,10 @@ public class AutentificationController {
         return autentificationRepository.findAll("*");
     }
 
+    /**
+     * Stergerea tuturor inregistrarilor din tabela
+     * @return mesaj de eroare sau succes
+     */
     @GetMapping(value="/deleteAll")
     public String deleteAll(){
         try{
@@ -40,6 +50,10 @@ public class AutentificationController {
         return "The records have been deleted.";
     }
 
+    /**
+     * Afisarea tuturor inregistrarilor din tabela
+     * @return mesaj de eroare sau succes
+     */
     @GetMapping(value="/findAll")
     public List<Autentification> findAll(){
 

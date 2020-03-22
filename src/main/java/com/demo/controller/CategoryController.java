@@ -15,6 +15,17 @@ public class CategoryController {
     @Autowired
     public CategoryController() { this.categoryRepository = new CategoryRepository(); }
 
+    /**
+     * Insereaza o noua categorie in tabela
+     * @param categoryType tipul categorie
+     * @param name numele categoriei
+     * @param ageRange intervalul de varsta
+     * @param matchTime durata unui meci(min)
+     * @param weightRange greutatea
+     * @param noOfTeamMembers membrii din echipa
+     * @param noOfMatches numar maxim de meciuri
+     * @return lista cu toate inregistrarile din tabela
+     */
     @PostMapping(value = "/create")
     @ResponseBody
     public List<Category> create(@RequestParam String categoryType,
@@ -42,6 +53,10 @@ public class CategoryController {
         return categoryRepository.findAll("*");
     }
 
+    /**
+     * Stergerea tuturor inregistrarilor din tabela
+     * @return mesaj de eroare sau succes
+     */
     @GetMapping(value="/deleteAll")
     public String deleteAll(){
         try{
@@ -52,6 +67,10 @@ public class CategoryController {
         return "The records have been deleted.";
     }
 
+    /**
+     * Afisarea tuturor inregistrarilor din tabela
+     * @return mesaj de eroare sau succes
+     */
     @GetMapping(value="/findAll")
     public List<Category> findAll(){
 

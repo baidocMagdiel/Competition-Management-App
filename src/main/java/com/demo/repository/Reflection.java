@@ -6,7 +6,7 @@ import java.util.Vector;
 public class Reflection {
 
     /**
-     *
+     *Extrage proprietatile unui obiect trimis ca parametru
      * @param object obiectul din care se doreste extragerea valorii/ atributelor
      * @param head   determina extragerea numelor atributelor (head = true) sau a
      *               valorilor atributelor (head = false)
