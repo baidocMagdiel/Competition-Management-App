@@ -38,7 +38,8 @@ Vizitatorul, adica utilizator temporar,  va avea dreptul de a vizualiza doar rez
 ## **Descrierea soluției**
 ### Diagramele sistemului
 ### Diagrame use case
-#### *Use case Admin*
+#### *Use case Administrator*
+![diagrama use case admin user](diagram/administrator.png)
 ### **Diagrama principală a arhitecturii**
 ### **Diagrama de deployment**
 ### **Diagrama de clase**
