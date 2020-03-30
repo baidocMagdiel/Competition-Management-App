@@ -1,6 +1,8 @@
 package com.demo.controller;
 
+import com.demo.entity.Competition;
 import com.demo.entity.Person;
+import com.demo.entity.SendEmail;
 import com.demo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +13,12 @@ import java.util.List;
 @RequestMapping(value="/person")
 public class PersonController {
     private PersonRepository personRepository;
+    private SendEmail sendEmail;
 
     @Autowired
     public PersonController() {
         this.personRepository = new PersonRepository();
+        this.sendEmail = new SendEmail();
     }
 
     /**
@@ -97,4 +101,17 @@ public class PersonController {
         return personRepository.findAll("*");
     }
 
+    /**
+     * Notifica toate persoanele din baza de date
+     * @return
+     */
+    @GetMapping(value="/notifyall")
+    public String notifyall(){
+
+        List<Person> personList = personRepository.findAll("*");
+        for(Person p : personList){
+            sendEmail.update(p.getEmail());
+        }
+        return "Succes!";
+    }
 }
