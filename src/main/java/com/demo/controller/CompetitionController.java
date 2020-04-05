@@ -1,19 +1,30 @@
 package com.demo.controller;
 
 import com.demo.entity.Competition;
+import com.demo.entity.Person;
 import com.demo.repository.CompetitionRepository;
+import com.demo.repository.PersonRepository;
+import com.demo.service.CompetitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping(value="/competition")
-public class CompetitionController {
+public class CompetitionController{
     private CompetitionRepository competitionRepository;
+    private PersonRepository personRepository;
 
     @Autowired
-    public CompetitionController() { this.competitionRepository = new CompetitionRepository(); }
+    private CompetitionService competitionService;
+
+    @Autowired
+    public CompetitionController() {
+        this.competitionRepository = new CompetitionRepository();
+        this.personRepository = new PersonRepository();
+    }
 
     /**
      *Insereaza o noua competitie in tabela
@@ -47,6 +58,8 @@ public class CompetitionController {
         newCompetition.setCompetitionStatus(competitionStatus);
 
         competitionRepository.insert(newCompetition);
+        List<Person> personList = personRepository.findAll("*");
+        competitionService.addNewCompetition(newCompetition, (ArrayList<Person>) personList);
         return competitionRepository.findAll("*");
     }
 
@@ -73,4 +86,5 @@ public class CompetitionController {
 
         return competitionRepository.findAll("*");
     }
+
 }

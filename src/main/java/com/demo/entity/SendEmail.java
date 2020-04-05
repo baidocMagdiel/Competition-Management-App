@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
-public class SendEmail implements Observer {
+public class SendEmail{
 
     public String sendEmail(String newEmail) throws MessagingException, IOException {
         sendmail(newEmail);
@@ -63,20 +63,5 @@ public class SendEmail implements Observer {
         //multipart.addBodyPart(attachPart);
         msg.setContent(multipart);
         Transport.send(msg);
-    }
-
-    /**
-     * Update observer
-     * @param email adresa de email a destinatarului
-     */
-    @Override
-    public void update(String email) {
-        try {
-            sendmail(email);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

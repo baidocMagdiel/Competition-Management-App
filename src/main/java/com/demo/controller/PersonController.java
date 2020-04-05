@@ -100,18 +100,4 @@ public class PersonController {
 
         return personRepository.findAll("*");
     }
-
-    /**
-     * Notifica toate persoanele din baza de date
-     * @return
-     */
-    @GetMapping(value="/notifyall")
-    public String notifyall(){
-
-        List<Person> personList = personRepository.findAll("*");
-        for(Person p : personList){
-            sendEmail.update(p.getEmail());
-        }
-        return "Succes!";
-    }
 }

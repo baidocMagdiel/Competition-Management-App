@@ -20,6 +20,11 @@ public class EmailController {
         return "Email sent successfully";
     }
 
+    /**
+     * Trimite email
+     * @throws MessagingException
+     * @throws IOException
+     */
     private void sendmail() throws MessagingException, IOException {
         Properties props = new Properties();
 

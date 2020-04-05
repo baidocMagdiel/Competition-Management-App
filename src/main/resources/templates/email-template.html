@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Template</title>
+</head>
+<body>
+
+<h2><p>Dear <span th:text="${surname}"></span> <span th:text="${firstname}"></span>,</p> </h2>
+<p> We are pleased to announce that a new competition has been added: </p>
+<h3 style="border:2px solid DodgerBlue;">
+    <p> <span th:text="${'Name    : ' + name}"> </span> <br />
+        <span th:text="${'Place     :' + place}">  </span> <br />
+        <span th:text="${'Date     :' + date}"> </span> <br />
+        <span th:text="${'Federation : ' +  federation}"> </span> </p></h3>
+<p> For more details visit "link"  <br />
+    We are waiting for you with great interest and wish you much success! </p>
+<p>
+    Regards, <br />
+    &emsp; <em>The Team</em>
+</p>
+
+</body>
+</html>
