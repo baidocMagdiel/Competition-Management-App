@@ -50,10 +50,8 @@ public class AbstractDAO<T> {
             sb.append(" WHERE " + field + " = " + value);
             return sb.toString();
         } catch (InstantiationException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;

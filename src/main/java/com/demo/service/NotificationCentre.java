@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class CompetitionService {
+public class NotificationCentre {
 
     //Observer
     @Autowired
     EmailSender emailSender = new EmailSender();
-
+    
     /**
      * Notifica toti antrenorii de adaugarea unei noi competitii
      * @param newComCopmetition noua competitie ce este adaugata
@@ -29,5 +29,4 @@ public class CompetitionService {
         }
         return 0;
     }
-
 }

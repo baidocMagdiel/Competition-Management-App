@@ -4,7 +4,7 @@ import com.demo.entity.Competition;
 import com.demo.entity.Person;
 import com.demo.repository.CompetitionRepository;
 import com.demo.repository.PersonRepository;
-import com.demo.service.CompetitionService;
+import com.demo.service.NotificationCentre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ public class CompetitionController{
     private PersonRepository personRepository;
 
     @Autowired
-    private CompetitionService competitionService;
+    private NotificationCentre notificationCentre;
 
     @Autowired
     public CompetitionController() {
@@ -59,7 +59,7 @@ public class CompetitionController{
 
         competitionRepository.insert(newCompetition);
         List<Person> personList = personRepository.findAll("*");
-        competitionService.addNewCompetition(newCompetition, (ArrayList<Person>) personList);
+        notificationCentre.addNewCompetition(newCompetition, (ArrayList<Person>) personList);
         return competitionRepository.findAll("*");
     }
 

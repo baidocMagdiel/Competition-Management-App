@@ -1,8 +1,6 @@
-package com.demo;
-
 import com.demo.entity.Competition;
 import com.demo.entity.Person;
-import com.demo.service.CompetitionService;
+import com.demo.service.NotificationCentre;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 public class TestObserver {
 
     @InjectMocks
-    private CompetitionService competitionService = new CompetitionService();
+    private NotificationCentre notificationCentre = new NotificationCentre();
 
     @Mock
     SpringTemplateEngine templateEngine;
@@ -28,6 +26,9 @@ public class TestObserver {
         MockitoAnnotations.initMocks(this);
     }
 
+    /**
+     * Testez observerul
+     */
     @Test
     public void testObserver() {
 
@@ -43,7 +44,7 @@ public class TestObserver {
         personList.add(person2);
         personList.add(person3);
 
-        int status = competitionService.addNewCompetition(newCompetition,personList);
+        int status = notificationCentre.addNewCompetition(newCompetition,personList);
         assert(status == 0);
     }
 

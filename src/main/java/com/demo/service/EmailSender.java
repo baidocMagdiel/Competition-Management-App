@@ -75,5 +75,4 @@ public class EmailSender implements Observer{
         }
         return 0;
     }
-
 }
