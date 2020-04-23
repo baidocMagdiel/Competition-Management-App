@@ -1,8 +1,9 @@
-package com.demo.service;
+package com.demo.service.email;
 
 import com.demo.entity.Competition;
-import com.demo.entity.Person;
+import com.demo.entity.person.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class EmailSender implements Observer{
+public class EmailSender implements Observer {
 
     @Autowired
     SpringTemplateEngine templateEngine;
@@ -35,11 +36,12 @@ public class EmailSender implements Observer{
                 StandardCharsets.UTF_8.name());
 
         Map<String, Object> model = new HashMap<String, Object>();
+        model.put("logo", "logo");
         model.put("surname",person.getSurname());
         model.put("firstname",person.getFirstName());
         model.put("name",competition.getName());
         model.put("place",competition.getPlace());
-        model.put("date",competition.getDate());
+        model.put("date",competition.getStartDate());
         model.put("federation",competition.getFederation());
 
         Context context = new Context();
@@ -51,10 +53,10 @@ public class EmailSender implements Observer{
             //helper.setTo("baidoc.magdiel@yahoo.com");
             helper.setText(html,true);
             helper.setSubject("New Competition Added");
+            helper.addInline("logo", new ClassPathResource("karate4All.png"), "karate4All/png");
         } catch (javax.mail.MessagingException e) {
             e.printStackTrace();
         }
-
         sender.send(message);
     }
 

@@ -34,7 +34,6 @@ Vizitatorul, adica utilizator temporar,  va avea dreptul de a vizualiza doar rez
 -	Înscriere sportivi în competiție
 -	Vizualizare clasamente
 -	Actualizare/vizualizare rezulate competiție
-
 ## **Descrierea soluției**
 ### Diagramele sistemului
 ### Diagrame use case

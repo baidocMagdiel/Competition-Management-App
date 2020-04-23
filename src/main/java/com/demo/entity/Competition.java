@@ -1,20 +1,31 @@
 package com.demo.entity;
 
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+@Table(name="Competition")
 public class Competition {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long competitionId;
     private String name;
-    private String date;
+    private Date startDate;
+    private Date endDate;
+    private Date lastRegistrationDate;
     private String place;
     private String federation;
     private int noOfEntries;
     private int noOfCountries;
     private String competitionStatus;
 
-    public Competition(long competitionId, String name, String date, String place, String federation, int noOfEntries, int noOfCountries, String competitionStatus) {
+    public Competition(long competitionId, String name, Date startDate, Date endDate, Date lastRegistrationDate, String place, String federation, int noOfEntries, int noOfCountries, String competitionStatus) {
         this.competitionId = competitionId;
         this.name = name;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.lastRegistrationDate = lastRegistrationDate;
         this.place = place;
         this.federation = federation;
         this.noOfEntries = noOfEntries;
@@ -41,12 +52,28 @@ public class Competition {
         this.name = name;
     }
 
-    public String getDate() {
-        return date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Date getLastRegistrationDate() {
+        return lastRegistrationDate;
+    }
+
+    public void setLastRegistrationDate(Date lastRegistrationDate) {
+        this.lastRegistrationDate = lastRegistrationDate;
     }
 
     public String getPlace() {

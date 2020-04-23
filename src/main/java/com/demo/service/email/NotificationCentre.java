@@ -1,7 +1,8 @@
-package com.demo.service;
+package com.demo.service.email;
 
 import com.demo.entity.Competition;
-import com.demo.entity.Person;
+import com.demo.entity.person.Person;
+import com.demo.service.email.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
