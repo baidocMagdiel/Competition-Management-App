@@ -1,11 +1,17 @@
 package com.demo.entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="Club")
 public class Club {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String address;
     private String clubId;
     private String name;
+    private String address;
 
     public Club(long id, String clubId, String name, String address) {
         this.id = id;
@@ -25,14 +31,6 @@ public class Club {
         this.id = id;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getClubId() {
         return clubId;
     }
@@ -47,5 +45,13 @@ public class Club {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

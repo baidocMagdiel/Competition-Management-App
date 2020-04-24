@@ -1,7 +1,12 @@
 package com.demo.entity;
+import javax.persistence.*;
 
+@Entity
+@Table(name="Autentification")
 public class Autentification {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long autentificationId;
     private String email;
     private String password;

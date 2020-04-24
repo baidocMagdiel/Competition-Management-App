@@ -1,7 +1,5 @@
-import com.demo.entity.Category;
 import com.demo.entity.Club;
 import com.demo.entity.Competition;
-import com.demo.entity.Person;
 import com.demo.repository.CategoryRepository;
 import com.demo.repository.ClubRepository;
 import com.demo.repository.CompetitionRepository;
@@ -15,7 +13,7 @@ public class TestDatabase {
     /**
      * Testarea operatiilor asupra tabelei Person
      */
-    @Test
+    /*@Test
     public void personDbTest(){
 
         PersonRepository personRepository = new PersonRepository();
@@ -48,13 +46,13 @@ public class TestDatabase {
         personRepository.deleteAll();
         rez = (ArrayList<Person>) personRepository.findAll("*");
         assert (rez == null);
-    }
+    }*/
 
 
     /**
      * Testarea operatiilor asupra tabelei Category
      */
-    @Test
+    /*@Test
     public void categoryDbTest(){
 
         CategoryRepository categoryRepository = new CategoryRepository();
@@ -78,12 +76,12 @@ public class TestDatabase {
         categoryRepository.deleteAll();
         rez = (ArrayList<Category>) categoryRepository.findAll("*");
         assert (rez == null);
-    }
+    }*/
 
     /**
      * Testarea operatiilor asupra tabelei Competition
      */
-    @Test
+    /*@Test
     public void competitionDbTest(){
 
         CompetitionRepository competitionRepository = new CompetitionRepository();
@@ -105,12 +103,12 @@ public class TestDatabase {
         rez = (ArrayList<Competition>) competitionRepository.findAll("*");
 
         assert (rez == null);
-    }
+    } */
 
     /**
      * Testarea operatiilor asupra tabelei Club
      */
-    @Test
+   /* @Test
     public void clubDbTest(){
 
         ClubRepository clubRepository = new ClubRepository();
@@ -127,5 +125,5 @@ public class TestDatabase {
         clubRepository.deleteAll();
         rez = (ArrayList<Club>) clubRepository.findAll("*");
         assert (rez == null);
-    }
+    } */
 }

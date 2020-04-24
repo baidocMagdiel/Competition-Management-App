@@ -1,117 +1,79 @@
 package com.demo.controller;
 
-import com.demo.entity.Competition;
-import com.demo.entity.Person;
-import com.demo.entity.SendEmail;
-import com.demo.repository.PersonRepository;
+import com.demo.entity.person.Person;
+import com.demo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
+import static com.demo.util.Constant.SUCCES;
 
 @RestController
 @RequestMapping(value="/person")
 public class PersonController {
-    private PersonRepository personRepository;
-    private SendEmail sendEmail;
 
     @Autowired
-    public PersonController() {
-        this.personRepository = new PersonRepository();
-        this.sendEmail = new SendEmail();
-    }
+    PersonService personService;
 
-    /**
-     * Insereaza o noua persoana in baza date
-     * @param personType tipul persoanei(administrator, sportiv, manager, antrenor)
-     * @param firstName prenume
-     * @param surname nume de familie
-     * @param address adresa
-     * @param birthday data de nastere
-     * @param email adresa de email
-     * @param gender sex
-     * @param clubId id-ul clubului
-     * @param weight greutate
-     * @param danDegree grad
-     * @param worldRanking loc in clasament
-     * @param bloodType grupa sanguina
-     * @return lista cu toate inregistrarile din tabela
-     */
     @PostMapping(value="/create")
     @ResponseBody
-    public List<Person> create(@RequestParam String personType,
-                               @RequestParam String firstName,
-                               @RequestParam String surname,
-                               @RequestParam String address,
-                               @RequestParam String birthday,
-                               @RequestParam String email,
-                               @RequestParam String gender,
-                               @RequestParam(defaultValue = "0") String clubId,
-                               @RequestParam(defaultValue = "1.5") double weight,
-                               @RequestParam(defaultValue = "10 Kyu") String danDegree,
-                               @RequestParam(defaultValue = "0") int worldRanking,
-                               @RequestParam(defaultValue = "A0") String bloodType){
+    public ResponseEntity<String> create(@RequestParam String personType,
+                         @RequestParam String firstName,
+                         @RequestParam String surname,
+                         @RequestParam String address,
+                         @RequestParam String birthday,
+                         @RequestParam String email,
+                         @RequestParam String gender,
+                         @RequestParam(defaultValue = "0") String clubId,
+                         @RequestParam(defaultValue = "1.5") double weight,
+                         @RequestParam(defaultValue = "10 Kyu") String danDegree,
+                         @RequestParam(defaultValue = "0") int worldRanking,
+                         @RequestParam(defaultValue = "A0") String bloodType){
 
-        Person newPerson = new Person();
-
-        newPerson.setDtype(personType);
-        newPerson.setFirstName(firstName);
-        newPerson.setSurname(surname);
-        newPerson.setAddress(address);
-        newPerson.setBirthday(birthday);
-        newPerson.setEmail(email);
-        newPerson.setGender(gender);
-
-        if(personType.equals("Coach")){
-            newPerson.setClubId(clubId);
-        }
-        if(personType.equals("Athlete")){
-            newPerson.setClubId(clubId);
-            newPerson.setBloodType(bloodType);
-            newPerson.setWeight(weight);
-            newPerson.setDanDegree(danDegree);
-            newPerson.setWorldRanking(worldRanking);
-        }
-
-        personRepository.insert(newPerson);
-        return personRepository.findAll("*");
+           String status = personService.create(personType, firstName, surname, address, birthday, email, gender, clubId, weight, danDegree, worldRanking, bloodType);
+           if(!status.equals(SUCCES)){
+               return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+           }
+           return new ResponseEntity<>("[INFO]:The person was added.", HttpStatus.OK);
     }
 
-    /**
-     * Stergerea tuturor inregistrarilor din tabela
-     * @return mesaj de eroare sau succes
-     */
-    @GetMapping(value="/deleteAll")
-    public String deleteAll(){
-        try{
-            personRepository.deleteAll();
-        } catch(Exception ex){
-            return "[Error] The records were not deleted. " + ex.getMessage();
+    @PostMapping(value = "/update")
+    @ResponseBody
+    public ResponseEntity<String> update(@RequestParam String personType,
+                                         @RequestParam String firstName,
+                                         @RequestParam String surname,
+                                         @RequestParam String address,
+                                         @RequestParam String birthday,
+                                         @RequestParam String email,
+                                         @RequestParam String gender,
+                                         @RequestParam(defaultValue = "0") String clubId,
+                                         @RequestParam(defaultValue = "1.5") double weight,
+                                         @RequestParam(defaultValue = "10 Kyu") String danDegree,
+                                         @RequestParam(defaultValue = "0") int worldRanking,
+                                         @RequestParam(defaultValue = "A0") String bloodType) {
+
+        String status = personService.updatePerson(personType, firstName, surname, address, birthday, email, gender, clubId, weight, danDegree, worldRanking, bloodType);
+        if(!status.equals(SUCCES)){
+            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
         }
-        return "The records have been deleted.";
+        return new ResponseEntity<>("[INFO]:The person was updated.", HttpStatus.OK);
     }
 
-    /**
-     * Afisarea tuturor inregistrarilor din tabela
-     * @return mesaj de eroare sau succes
-     */
-    @GetMapping(value="/findAll")
-    public List<Person> findAll(){
-
-        return personRepository.findAll("*");
+    @DeleteMapping(value = "/delete")
+    @ResponseBody
+    public ResponseEntity<String> delete(@RequestParam String email) {
+        String status = personService.deleteByEmail(email);
+        if(!status.equals(SUCCES)){
+            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("[INFO]:The person was deleted.", HttpStatus.OK);
     }
 
-    /**
-     * Notifica toate persoanele din baza de date
-     * @return
-     */
-    @GetMapping(value="/notifyall")
-    public String notifyall(){
-
-        List<Person> personList = personRepository.findAll("*");
-        for(Person p : personList){
-            sendEmail.update(p.getEmail());
-        }
-        return "Succes!";
+    @GetMapping(value = "/getall")
+    @ResponseBody
+    public List<Person> getAll(){
+        return personService.findAll();
     }
 }

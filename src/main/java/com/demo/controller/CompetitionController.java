@@ -1,76 +1,89 @@
 package com.demo.controller;
 
-import com.demo.entity.Competition;
-import com.demo.repository.CompetitionRepository;
+import com.demo.service.CompetitionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import static com.demo.util.Constant.*;
 
 @RestController
 @RequestMapping(value="/competition")
-public class CompetitionController {
-    private CompetitionRepository competitionRepository;
+public class CompetitionController{
 
     @Autowired
-    public CompetitionController() { this.competitionRepository = new CompetitionRepository(); }
+    CompetitionService competitionService;
 
-    /**
-     *Insereaza o noua competitie in tabela
-     * @param name numele competitie
-     * @param date  data
-     * @param place locul de desfasurare
-     * @param federation federatia
-     * @param noOfEntries numarul de intrari in competitie
-     * @param noOfCountries numarul de tari inscrise in competitie
-     * @param competitionStatus statusul competitie
-     * @return lista cu toate inregistrarile din tabela
-     */
-    @PostMapping(value="/create")
+    @PostMapping(value = "/create")
     @ResponseBody
-    public List<Competition> create(@RequestParam String name,
-                                    @RequestParam String date,
-                                    @RequestParam String place,
-                                    @RequestParam String federation,
-                                    @RequestParam(defaultValue = "0")int noOfEntries,
-                                    @RequestParam(defaultValue = "0") int noOfCountries,
-                                    @RequestParam(defaultValue = "ACTIVE") String competitionStatus){
+    public ResponseEntity<String> create(@RequestParam String name,
+                                         @RequestParam String place,
+                                         @RequestParam String federation,
+                                         @RequestParam String startDate,
+                                         @RequestParam String endDate,
+                                         @RequestParam String lastRegistrationDate,
+                                         @RequestParam(defaultValue = "0")int noOfEntries,
+                                         @RequestParam(defaultValue = "0") int noOfCountries,
+                                         @RequestParam(defaultValue = "ACTIVE") String competitionStatus){
 
-        Competition newCompetition = new Competition();
 
-        newCompetition.setName(name);
-        newCompetition.setDate(date);
-        newCompetition.setPlace(place);
-        newCompetition.setFederation(federation);
-        newCompetition.setNoOfCountries(noOfCountries);
-        newCompetition.setNoOfEntries(noOfEntries);
-        newCompetition.setCompetitionStatus(competitionStatus);
-
-        competitionRepository.insert(newCompetition);
-        return competitionRepository.findAll("*");
-    }
-
-    /**
-     * Stergerea tuturor inregistrarilor din tabela
-     * @return mesaj de eroare sau succes
-     */
-    @GetMapping(value="/deleteAll")
-    public String deleteAll(){
-        try{
-            competitionRepository.deleteAll();
-        } catch(Exception ex){
-            return "[Error] The records were not deleted. " + ex.getMessage();
+        String status = competitionService.create(name,startDate,endDate,lastRegistrationDate,place,federation,noOfEntries,noOfCountries,competitionStatus);
+        if(!status.equals(SUCCES)){
+            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
         }
-        return "The records have been deleted.";
+        return new ResponseEntity<>("[INFO]:Your competition was added.", HttpStatus.OK);
     }
 
-    /**
-     * Afisarea tuturor inregistrarilor din tabela
-     * @return mesaj de eroare sau succes
-     */
-    @GetMapping(value="/findAll")
-    public List<Competition> findAll(){
+    @PostMapping(value = "/update")
+    @ResponseBody
+    public ResponseEntity<String> update(@RequestParam long competitionId,
+                                         @RequestParam String name,
+                                         @RequestParam String place,
+                                         @RequestParam String federation,
+                                         @RequestParam String startDate,
+                                         @RequestParam String endDate,
+                                         @RequestParam String lastRegistrationDate,
+                                         @RequestParam(defaultValue = "0")int noOfEntries,
+                                         @RequestParam(defaultValue = "0") int noOfCountries,
+                                         @RequestParam(defaultValue = "ACTIVE") String competitionStatus){
 
-        return competitionRepository.findAll("*");
+
+        String status = competitionService.updateCompetition(competitionId,name,startDate,endDate,lastRegistrationDate,place,federation,noOfEntries,noOfCountries,competitionStatus);
+        if(!status.equals(SUCCES)){
+            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("[INFO]:Your competition was updated.", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/addcategory")
+    @ResponseBody
+    public ResponseEntity<String> addCategory(@RequestParam long competitionId, @RequestParam long categoryId){
+
+        String status = competitionService.addCategory(competitionId,categoryId);
+        if(!status.equals(SUCCES)){
+            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("[INFO]:Your category was assigned to the competition.", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/removecategory")
+    @ResponseBody
+    public ResponseEntity<String> removeCategory(@RequestParam long competitionId, @RequestParam long categoryId){
+
+        String status = competitionService.removeCategory(competitionId,categoryId);
+        if(!status.equals(SUCCES)){
+            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("[INFO]:The category was removed to the competition.", HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/delete")
+    @ResponseBody
+    public ResponseEntity<String> delete(@RequestParam long competitionId) {
+        String status = competitionService.deleteById(competitionId);
+        if(!status.equals(SUCCES)){
+            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("[INFO]:Your competition was deleted.", HttpStatus.OK);
     }
 }
