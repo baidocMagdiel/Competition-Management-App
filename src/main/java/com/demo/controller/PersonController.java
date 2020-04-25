@@ -36,7 +36,11 @@ public class PersonController {
            if(!status.equals(SUCCES)){
                return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
            }
+<<<<<<< HEAD
            return new ResponseEntity<>("[INFO]:The person was added.", HttpStatus.OK);
+=======
+           return new ResponseEntity<>("[INFO]:The person has been added.", HttpStatus.OK);
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
     }
 
     @PostMapping(value = "/update")
@@ -58,7 +62,11 @@ public class PersonController {
         if(!status.equals(SUCCES)){
             return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
         }
+<<<<<<< HEAD
         return new ResponseEntity<>("[INFO]:The person was updated.", HttpStatus.OK);
+=======
+        return new ResponseEntity<>("[INFO]:The person has been updated.", HttpStatus.OK);
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
     }
 
     @DeleteMapping(value = "/delete")
@@ -68,7 +76,11 @@ public class PersonController {
         if(!status.equals(SUCCES)){
             return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
         }
+<<<<<<< HEAD
         return new ResponseEntity<>("[INFO]:The person was deleted.", HttpStatus.OK);
+=======
+        return new ResponseEntity<>("[INFO]:The person has been deleted.", HttpStatus.OK);
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
     }
 
     @GetMapping(value = "/getall")

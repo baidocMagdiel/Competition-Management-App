@@ -1,5 +1,9 @@
 import com.demo.entity.Club;
 import com.demo.entity.Competition;
+<<<<<<< HEAD
+=======
+import com.demo.entity.person.Person;
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 import com.demo.repository.CategoryRepository;
 import com.demo.repository.ClubRepository;
 import com.demo.repository.CompetitionRepository;
@@ -46,13 +50,21 @@ public class TestDatabase {
         personRepository.deleteAll();
         rez = (ArrayList<Person>) personRepository.findAll("*");
         assert (rez == null);
+<<<<<<< HEAD
     }*/
+=======
+    } */
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 
 
     /**
      * Testarea operatiilor asupra tabelei Category
      */
+<<<<<<< HEAD
     /*@Test
+=======
+   /* @Test
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
     public void categoryDbTest(){
 
         CategoryRepository categoryRepository = new CategoryRepository();
@@ -76,12 +88,20 @@ public class TestDatabase {
         categoryRepository.deleteAll();
         rez = (ArrayList<Category>) categoryRepository.findAll("*");
         assert (rez == null);
+<<<<<<< HEAD
     }*/
+=======
+    } */
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 
     /**
      * Testarea operatiilor asupra tabelei Competition
      */
+<<<<<<< HEAD
     /*@Test
+=======
+   /* @Test
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
     public void competitionDbTest(){
 
         CompetitionRepository competitionRepository = new CompetitionRepository();
@@ -108,7 +128,11 @@ public class TestDatabase {
     /**
      * Testarea operatiilor asupra tabelei Club
      */
+<<<<<<< HEAD
    /* @Test
+=======
+    /*@Test
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
     public void clubDbTest(){
 
         ClubRepository clubRepository = new ClubRepository();
@@ -125,5 +149,9 @@ public class TestDatabase {
         clubRepository.deleteAll();
         rez = (ArrayList<Club>) clubRepository.findAll("*");
         assert (rez == null);
+<<<<<<< HEAD
     } */
+=======
+    }  */
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 }

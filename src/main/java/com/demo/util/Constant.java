@@ -6,12 +6,20 @@ public final class Constant {
     public static final String ERROR = "ERROR";
     public static final String SUCCES = "The operation was successful.";
     public static final String EXISTS = "There is already an account for ";
+<<<<<<< HEAD
     public static final String EMPTY_FIELD = "[ERROR]:Required fields are blank/empty.";
     public static final String EMAIL_INCORRECT = "[ERROR]:The email entered is incorrect.";
     public static final String ERR_DATE_FORMAT = "[ERROR]:Date format is incorrect.";
     public static final String ERR_DATE_RANGE = "[ERROR]:Incorrect date range. Check the start date, end date and last registration date.";
     public static final String DATE_FORMAT = "dd/MM/yyyy";
     public static final String DATE_FORMAT_2 = "dd-M-yyyy hh:mm:ss";
+=======
+    public static final String EMPTY_FIELD = "[ERROR]:Required fields are blank.";
+    public static final String EMAIL_INCORRECT = "[ERROR]:The email entered is incorrect.";
+    public static final String ERR_BIRTHDAY_FORMAT = "[ERROR]:Birthday format is incorrect.";
+
+    public static final String DATE_FORMAT = "dd/MM/yyyy";
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 
     //constante pentru person
     public static final String COACH = "coach";

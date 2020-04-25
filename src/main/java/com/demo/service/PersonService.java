@@ -40,7 +40,11 @@ public class PersonService {
         try {
             birthday = dateformat.parse(birthdayStr);
         } catch (ParseException e) {
+<<<<<<< HEAD
             return ERR_DATE_FORMAT;
+=======
+            return ERR_BIRTHDAY_FORMAT;
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
         }
 
         Person newPerson  = personFactory.createPerson(personType, firstName, surname, address, birthday, email, gender, clubId, weight, danDegree, worldRanking, bloodType);
@@ -84,7 +88,11 @@ public class PersonService {
         try {
             birthday = dateformat.parse(birthdayStr);
         } catch (ParseException e) {
+<<<<<<< HEAD
             return ERR_DATE_FORMAT;
+=======
+            return ERR_BIRTHDAY_FORMAT;
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
         }
 
         Person newPerson  = personFactory.createPerson(personType, firstName, surname, address, birthday, email, gender, clubId, weight, danDegree, worldRanking, bloodType);
@@ -113,8 +121,11 @@ public class PersonService {
     public List<Person> findAll(){
         return personRepository.findAll();
     }
+<<<<<<< HEAD
 
     public Person findById(long personId){
         return personRepository.findById(personId).orElse(null);
     }
+=======
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 }

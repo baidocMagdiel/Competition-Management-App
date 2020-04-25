@@ -1,5 +1,6 @@
 package com.demo.util;
 
+<<<<<<< HEAD
 import com.demo.entity.Competition;
 import com.demo.entity.Participation;
 import com.demo.entity.category.Category;
@@ -10,6 +11,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+=======
+import com.demo.entity.category.Category;
+import com.demo.entity.person.Person;
+
+import java.util.regex.Pattern;
+
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 import static com.demo.util.Constant.*;
 
 public class Validator {
@@ -39,6 +47,7 @@ public class Validator {
         }
         return SUCCES;
     }
+<<<<<<< HEAD
 
     public static String checkCompetition(Competition newCompetition) {
 
@@ -74,4 +83,6 @@ public class Validator {
         }
         return SUCCES;
     }
+=======
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 }

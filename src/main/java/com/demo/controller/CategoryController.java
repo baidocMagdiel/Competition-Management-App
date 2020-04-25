@@ -33,7 +33,11 @@ public class CategoryController {
         if(!status.equals(SUCCES)){
             return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
         }
+<<<<<<< HEAD
         return new ResponseEntity<>("[INFO]:Your category was added.", HttpStatus.OK);
+=======
+        return new ResponseEntity<>("[INFO]:The category has been added.", HttpStatus.OK);
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
     }
 
     @PostMapping(value="/update")
@@ -47,11 +51,19 @@ public class CategoryController {
                                          @RequestParam(defaultValue = "5") int noOfTeamMembers,
                                          @RequestParam(defaultValue = "3") int noOfMatches){
 
+<<<<<<< HEAD
         String status = categoryService.updateCategory(categoryType, categoryId, name, ageRange, matchTime, weightRange, noOfTeamMembers, noOfMatches);
         if(!status.equals(SUCCES)){
             return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("[INFO]:Your category was updated.", HttpStatus.OK);
+=======
+        String status = categoryService.updatePerson(categoryType, categoryId, name, ageRange, matchTime, weightRange, noOfTeamMembers, noOfMatches);
+        if(!status.equals(SUCCES)){
+            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("[INFO]:The category has been updated.", HttpStatus.OK);
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
     }
 
     @DeleteMapping(value = "/delete")
@@ -61,7 +73,11 @@ public class CategoryController {
         if(!status.equals(SUCCES)){
             return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
         }
+<<<<<<< HEAD
         return new ResponseEntity<>("[INFO]:Your category was deleted.", HttpStatus.OK);
+=======
+        return new ResponseEntity<>("[INFO]:The category has been deleted.", HttpStatus.OK);
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
     }
 
     @GetMapping(value = "/getall")

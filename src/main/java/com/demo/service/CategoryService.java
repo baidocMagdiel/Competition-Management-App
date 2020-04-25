@@ -1,6 +1,10 @@
 package com.demo.service;
 
 import com.demo.entity.category.Category;
+<<<<<<< HEAD
+=======
+import com.demo.entity.person.Person;
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 import com.demo.repository.CategoryRepository;
 import com.demo.util.CategoryFactory;
 import com.demo.util.Validator;
@@ -40,7 +44,11 @@ public class CategoryService {
         return SUCCES;
     }
 
+<<<<<<< HEAD
     public String updateCategory( String categoryType,
+=======
+    public String updatePerson( String categoryType,
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
                                 long categoryId,
                                 String name,
                                 String ageRange,
@@ -85,8 +93,11 @@ public class CategoryService {
     public List<Category> findAll(){
         return categoryRepository.findAll();
     }
+<<<<<<< HEAD
 
     public Category findById(long categoryId){
         return categoryRepository.findById(categoryId).orElse(null);
     }
+=======
+>>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 }
