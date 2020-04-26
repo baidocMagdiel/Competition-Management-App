@@ -57,13 +57,9 @@ Vizitatorul, adica utilizator temporar,  va avea dreptul de a vizualiza doar rez
 (se va dezvolta ulterior)
 ### Design patterns: 
 ### 1)Observer
-<<<<<<< HEAD
-Folosit pentru a anunța antrenorii despre noi competiții adăugate. 
-=======
 Folosit pentru a anunța antrenorii despre noi competiții adăugate. Notificarea antrenorilor se realizeaza printr-un mail trimis catre fiecare antrenor.
 Clasa SendMail implementeaza interfata Observer si contine o metoda pentru trimiterea email-ului. Clasa NotificationCentre este clasa observata  si contine o lista de observatori(Observer). La apelul metodei "addNewCompetition", clasa NotificationCentre anunta observatorii aflati in lista sa de aparitia unei eveniment si astfel clasa SendMail va trimite email-uri catre antrenori.
 ![diagrama database](diagram/observer.JPG)
->>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 ### 2)Facade
 Folosit pentru a realiza conexiunea cu baza de date. Oferă o interfață simplificată a operațiilor asupra bazei de date.
 ### Conexiunea la baza de date

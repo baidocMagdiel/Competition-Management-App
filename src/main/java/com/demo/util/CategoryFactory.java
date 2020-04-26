@@ -10,6 +10,8 @@ public class CategoryFactory {
     public Category createCategory(String categoryType,
                                    String name,
                                    String ageRange,
+                                   String gender,
+                                   String catType,
                                    float matchTime,
                                    String weightRange,
                                    int noOfTeamMembers,
@@ -20,11 +22,11 @@ public class CategoryFactory {
 
             switch (categoryType){
                 case TEAM:
-                    newCategory = new TeamCategory(0,name,ageRange,matchTime,noOfTeamMembers,noOfMatches);
+                    newCategory = new TeamCategory(0,name,ageRange,gender,catType,matchTime,noOfTeamMembers,noOfMatches);
                     break;
 
                 case INDIVIDUAL:
-                    newCategory = new SingleCategory(0,name,ageRange,matchTime,weightRange);
+                    newCategory = new SingleCategory(0,name,ageRange,gender,catType,matchTime,weightRange);
                     break;
                 default:
                     break;

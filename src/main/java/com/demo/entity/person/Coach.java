@@ -1,28 +1,35 @@
 package com.demo.entity.person;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import com.demo.entity.Club;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @DiscriminatorValue("Coach")
 public class Coach extends  Person{
 
-    public String clubId;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "id")
+    private Club club = new Club();
 
-    public Coach(long personId, String surname, String firstName, String address, String gender, Date birthday, String email, String clubId) {
+    public Coach(long personId, String surname, String firstName, String address, String gender, Date birthday, String email) {
         super(personId, surname, firstName, address, gender, birthday, email);
-        this.clubId = clubId;
     }
 
     public Coach() {
     }
 
-    public String getClubId() {
-        return clubId;
+    public Club getClub() {
+        return club;
     }
 
-    public void setClubId(String clubId) {
-        this.clubId = clubId;
+    public void setClub(Club club) {
+        this.club = club;
     }
+
+    public void addClub(Club club){
+        this.club = club;
+    }
+
 }

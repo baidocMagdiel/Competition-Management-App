@@ -1,10 +1,6 @@
 package com.demo.service;
 
 import com.demo.entity.category.Category;
-<<<<<<< HEAD
-=======
-import com.demo.entity.person.Person;
->>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 import com.demo.repository.CategoryRepository;
 import com.demo.util.CategoryFactory;
 import com.demo.util.Validator;
@@ -24,11 +20,14 @@ public class CategoryService {
     public String create(String categoryType,
                          String name,
                          String ageRange,
+                         String gender,
+                         String catType,
                          float matchTime,
                          String weightRange,
                          int noOfTeamMembers,
                          int noOfMatches){
-        Category newCategory  = categoryFactory.createCategory(categoryType, name, ageRange, matchTime, weightRange, noOfTeamMembers, noOfMatches);
+
+        Category newCategory  = categoryFactory.createCategory(categoryType, name, ageRange, gender,catType, matchTime, weightRange, noOfTeamMembers, noOfMatches);
         if(newCategory == null) return "[ERROR]:Unknown/unsupported category-type [" + categoryType + "]" ;
 
         String flag = Validator.checkCategory(newCategory);
@@ -44,18 +43,16 @@ public class CategoryService {
         return SUCCES;
     }
 
-<<<<<<< HEAD
-    public String updateCategory( String categoryType,
-=======
-    public String updatePerson( String categoryType,
->>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
-                                long categoryId,
-                                String name,
-                                String ageRange,
-                                float matchTime,
-                                String weightRange,
-                                int noOfTeamMembers,
-                                int noOfMatches){
+    public String updateCategory(   String categoryType,
+                                    long categoryId,
+                                    String name,
+                                    String ageRange,
+                                    String gender,
+                                    String catType,
+                                    float matchTime,
+                                    String weightRange,
+                                    int noOfTeamMembers,
+                                    int noOfMatches){
 
         Category  category = categoryRepository.findById(categoryId).orElse(null);
         if (category == null){
@@ -67,7 +64,7 @@ public class CategoryService {
             return "[ERROR]:The category with this name " + name +" already exists.";
         }
 
-        Category newCategory  = categoryFactory.createCategory(categoryType, name, ageRange, matchTime, weightRange, noOfTeamMembers, noOfMatches);
+        Category newCategory  = categoryFactory.createCategory(categoryType, name, ageRange, gender, catType,matchTime, weightRange, noOfTeamMembers, noOfMatches);
         if(newCategory == null) return "[ERROR]:Unknown/unsupported category-type [" + categoryType + "]" ;
 
         if(newCategory.getClass() != category.getClass()) return "[ERROR]:The category does not have the same type.";
@@ -93,11 +90,9 @@ public class CategoryService {
     public List<Category> findAll(){
         return categoryRepository.findAll();
     }
-<<<<<<< HEAD
 
     public Category findById(long categoryId){
         return categoryRepository.findById(categoryId).orElse(null);
     }
-=======
->>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
+
 }

@@ -1,20 +1,15 @@
 package com.demo.controller;
 
-<<<<<<< HEAD
 import com.demo.service.CompetitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import static com.demo.util.Constant.*;
-=======
-import org.springframework.web.bind.annotation.*;
->>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 
 @RestController
 @RequestMapping(value="/competition")
 public class CompetitionController{
-<<<<<<< HEAD
 
     @Autowired
     CompetitionService competitionService;
@@ -91,7 +86,4 @@ public class CompetitionController{
         }
         return new ResponseEntity<>("[INFO]:Your competition was deleted.", HttpStatus.OK);
     }
-=======
-
->>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 }

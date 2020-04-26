@@ -11,12 +11,16 @@ public class Category {
     private long categoryId;
     private String name;
     private String ageRange;
+    private String gender;
+    private String categoryType;
     private float matchTime;
 
-    public Category(long categoryId, String name, String ageRange, float matchTime) {
+    public Category(long categoryId, String name, String ageRange, String gender, String categoryType, float matchTime) {
         this.categoryId = categoryId;
         this.name = name;
         this.ageRange = ageRange;
+        this.gender = gender;
+        this.categoryType = categoryType;
         this.matchTime = matchTime;
     }
 
@@ -59,4 +63,11 @@ public class Category {
         return matchTime;
     }
 
+    public String getGender() { return gender; }
+
+    public void setGender(String gender) { this.gender = gender; }
+
+    public String getCategoryType() { return categoryType; }
+
+    public void setCategoryType(String categoryType) { this.categoryType = categoryType;}
 }

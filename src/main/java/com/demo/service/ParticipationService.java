@@ -10,6 +10,7 @@ import com.demo.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.demo.util.Constant.*;
@@ -26,25 +27,38 @@ public class ParticipationService {
     @Autowired
     CategoryService categoryService;
 
-    public String addParticipation(long personId, long competitionId, long categoryId, int place, int rankingPoints){
+    public String addParticipation(String name, List<Long> personId, long competitionId, long categoryId, int place, int rankingPoints){
 
-        Person person = personService.findById(personId);
         Competition competition = competitionService.findById(competitionId);
         Category category = categoryService.findById(categoryId);
 
-        if(person == null || category == null || competition == null){
+        if(category == null || competition == null){
             return EMPTY_FIELD;
         }
 
-        if(!(person instanceof Athlete)){
-            return "The person must be an athlete.";
+        List<Athlete> personList = new ArrayList<>();
+
+        for(Long pid : personId){
+            Person person = personService.findById(pid);
+            if(!(person instanceof Athlete)){
+                return "The person must be an athlete.";
+            }
+            personList.add((Athlete) person);
         }
 
         if(!competition.getCategories().contains(category)){
             return "[ERROR]:" + category.getName() + " category is not assigned to" + competition.getName() + "competition.";
         }
 
-        Participation newParticipation = new Participation(0,competition,category, (Athlete) person,place,rankingPoints);
+        if(personList.isEmpty()){
+            return "[ERROR]: You must enter athlete / athletes.";
+        }
+
+        if(personList.size() != personId.size()){
+            return "[ERROR]:Of the " + personId.size() + " athletes were found only" + personList.size();
+        }
+
+        Participation newParticipation = new Participation(0,name,competition,category,personList,place,rankingPoints);
         String flag = Validator.checkParticipation(newParticipation);
         if(!flag.equals(SUCCES)) return flag;
 
@@ -52,18 +66,17 @@ public class ParticipationService {
         return SUCCES;
     }
 
-    public String updateParticipation(long participationId, long personId, long competitionId, long categoryId, int place, int rankingPoints){
+    public String updateParticipation(long participationId, String name, List<Long> personId, long competitionId, long categoryId, int place, int rankingPoints){
 
         Participation participation = participationRepository.findById(participationId).orElse(null);
         if(participation == null ){
             return "Participation with id " + participationId + " not found.";
         }
 
-        Person person = personService.findById(personId);
         Competition competition = competitionService.findById(competitionId);
         Category category = categoryService.findById(categoryId);
 
-        if(person == null || category == null || competition == null){
+        if(category == null || competition == null){
             return EMPTY_FIELD;
         }
 
@@ -71,11 +84,25 @@ public class ParticipationService {
             return "[ERROR]:" + category.getName() + " category is not assigned to" + competition.getName() + "competition.";
         }
 
-        if(!(person instanceof Athlete)){
-            return "The person must be an athlete.";
+        List<Athlete> personList = new ArrayList<>();
+
+        for(Long pid : personId){
+            Person person = personService.findById(pid);
+            if(!(person instanceof Athlete)){
+                return "[ERROR]:The person must be an athlete.";
+            }
+            personList.add((Athlete) person);
         }
 
-        Participation newParticipation = new Participation(0,competition,category, (Athlete) person,place,rankingPoints);
+        if(personList.isEmpty()){
+            return "[ERROR]: You must enter athlete / athletes.";
+        }
+
+        if(personList.size() != personId.size()){
+            return "[ERROR]:Of the " + personId.size() + " athletes were found only" + personList.size();
+        }
+
+        Participation newParticipation = new Participation(0,name,competition,category,personList,place,rankingPoints);
         String flag = Validator.checkParticipation(newParticipation);
         if(!flag.equals(SUCCES)) return flag;
 

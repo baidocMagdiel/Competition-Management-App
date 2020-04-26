@@ -8,8 +8,8 @@ import javax.persistence.Entity;
     public class SingleCategory extends Category {
     private String weightRange;
 
-    public SingleCategory(long categoryId, String name, String ageRange, float matchTime, String weightRange) {
-        super(categoryId, name, ageRange, matchTime);
+    public SingleCategory(long categoryId, String name, String ageRange, String gender, String categoryType, float matchTime, String weightRange) {
+        super(categoryId, name, ageRange, gender, categoryType, matchTime);
         this.weightRange = weightRange;
     }
 

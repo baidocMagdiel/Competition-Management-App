@@ -1,5 +1,7 @@
 package com.demo.service;
 
+import com.demo.entity.Club;
+import com.demo.entity.person.Coach;
 import com.demo.entity.person.Person;
 import com.demo.repository.PersonRepository;
 import com.demo.util.PersonFactory;
@@ -20,6 +22,9 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
+    @Autowired
+    ClubService clubService;
+
     private PersonFactory personFactory = new PersonFactory();
 
     public String create(String personType,
@@ -29,7 +34,6 @@ public class PersonService {
                          String birthdayStr,
                          String email,
                          String gender,
-                         String clubId,
                          double weight,
                          String danDegree,
                          int worldRanking,
@@ -40,14 +44,10 @@ public class PersonService {
         try {
             birthday = dateformat.parse(birthdayStr);
         } catch (ParseException e) {
-<<<<<<< HEAD
             return ERR_DATE_FORMAT;
-=======
-            return ERR_BIRTHDAY_FORMAT;
->>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
         }
 
-        Person newPerson  = personFactory.createPerson(personType, firstName, surname, address, birthday, email, gender, clubId, weight, danDegree, worldRanking, bloodType);
+        Person newPerson  = personFactory.createPerson(personType, firstName, surname, address, birthday, email, gender, weight, danDegree, worldRanking, bloodType);
         if(newPerson == null) return "[ERROR]:Unknown/unsupported person-type [" + personType + "]" ;
 
         String flag = Validator.checkPerson(newPerson);
@@ -71,7 +71,6 @@ public class PersonService {
                                String birthdayStr,
                                String email,
                                String gender,
-                               String clubId,
                                double weight,
                                String danDegree,
                                int worldRanking,
@@ -88,14 +87,10 @@ public class PersonService {
         try {
             birthday = dateformat.parse(birthdayStr);
         } catch (ParseException e) {
-<<<<<<< HEAD
             return ERR_DATE_FORMAT;
-=======
-            return ERR_BIRTHDAY_FORMAT;
->>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
         }
 
-        Person newPerson  = personFactory.createPerson(personType, firstName, surname, address, birthday, email, gender, clubId, weight, danDegree, worldRanking, bloodType);
+        Person newPerson  = personFactory.createPerson(personType, firstName, surname, address, birthday, email, gender, weight, danDegree, worldRanking, bloodType);
         if(newPerson == null) return "[ERROR]:Unknown/unsupported person-type [" + personType + "]." ;
 
         if(newPerson.getClass() != person.getClass()) return "[ERROR]:The person does not have the same type.";
@@ -118,14 +113,47 @@ public class PersonService {
         return SUCCES;
     }
 
+    public String deleteById(long personId){
+
+        Person person = personRepository.findById(personId).orElse(null);
+        if (person == null){
+            return "Person with id " + personId + " not found.";
+        }
+        personRepository.delete(person);
+        return SUCCES;
+    }
+
+    public String addClub(long personId, long clubId){
+
+        Person person = personRepository.findById(personId).orElse(null);
+        if (person == null){
+            return "Person with id " + personId + " not found.";
+        }
+
+        Club club = clubService.findById(clubId);
+        if (club == null){
+            return "Club with id " + clubId + " not found.";
+        }
+
+        if(!(person instanceof Coach)){
+            return "[ERROR]:The person must be a coach.";
+        }
+
+        ((Coach) person).addClub(club);
+        personRepository.save(person);
+        return SUCCES;
+    }
+
     public List<Person> findAll(){
         return personRepository.findAll();
     }
-<<<<<<< HEAD
 
     public Person findById(long personId){
         return personRepository.findById(personId).orElse(null);
     }
-=======
->>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
+
+    public Person findByEmail(String email){
+        return personRepository.findByEmail(email);
+    }
+
 }

@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 import static com.demo.util.Constant.SUCCES;
 
 @RestController
@@ -20,13 +19,14 @@ public class ParticipationController {
 
     @PostMapping(value = "/create")
     @ResponseBody
-    public ResponseEntity<String> create(@RequestParam long personId,
+    public ResponseEntity<String> create(@RequestParam(defaultValue = "") String name,
+                                         @RequestBody List<Long> personId,
                                          @RequestParam long categoryId,
                                          @RequestParam long competitionId,
                                          @RequestParam int place,
                                          @RequestParam int rankingPoints){
 
-        String status = participationService.addParticipation(personId,competitionId,categoryId,place,rankingPoints);
+        String status = participationService.addParticipation(name, personId,competitionId,categoryId,place,rankingPoints);
         if(!status.equals(SUCCES)){
             return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
         }
@@ -36,13 +36,14 @@ public class ParticipationController {
     @PostMapping(value = "/update")
     @ResponseBody
     public ResponseEntity<String> update(@RequestParam long participationId,
-                                         @RequestParam long personId,
+                                         @RequestParam(defaultValue = "") String name,
+                                         @RequestBody List<Long> personId,
                                          @RequestParam long categoryId,
                                          @RequestParam long competitionId,
                                          @RequestParam int place,
                                          @RequestParam int rankingPoints){
 
-        String status = participationService.updateParticipation(participationId,personId,competitionId,categoryId,place,rankingPoints);
+        String status = participationService.updateParticipation(participationId,name,personId,competitionId,categoryId,place,rankingPoints);
         if(!status.equals(SUCCES)){
             return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
         }

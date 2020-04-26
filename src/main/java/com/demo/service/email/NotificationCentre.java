@@ -2,11 +2,10 @@ package com.demo.service.email;
 
 import com.demo.entity.Competition;
 import com.demo.entity.person.Person;
-import com.demo.service.email.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class NotificationCentre {
@@ -21,7 +20,7 @@ public class NotificationCentre {
      * @param personList lista de persoane ce trebuie notificate
      * @return -1 in caz de esec, 0 daca au fost notificati toti antrenorii
      */
-    public int addNewCompetition(Competition newComCopmetition, ArrayList<Person> personList){
+    public int addNewCompetition(Competition newComCopmetition, List<Person> personList){
 
         for(Person p: personList){
             if( emailSender.update(p, newComCopmetition) == -1){

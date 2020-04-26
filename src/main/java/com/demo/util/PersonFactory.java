@@ -1,5 +1,6 @@
 package com.demo.util;
 
+import com.demo.entity.Club;
 import com.demo.entity.person.Athlete;
 import com.demo.entity.person.Coach;
 import com.demo.entity.person.CompetitionManager;
@@ -18,7 +19,6 @@ public class PersonFactory {
                                Date birthday,
                                String email,
                                String gender,
-                               String clubId,
                                double weight,
                                String danDegree,
                                int worldRanking,
@@ -29,11 +29,11 @@ public class PersonFactory {
 
             switch (personType){
                 case COACH:
-                    newPerson = new Coach(0,surname,firstName,address,gender,birthday,email,clubId);
+                    newPerson = new Coach(0,surname,firstName,address,gender,birthday,email);
                     break;
 
                 case ATHLETE:
-                    newPerson = new Athlete(0,surname,firstName,address,gender,birthday,email,weight,bloodType,danDegree,worldRanking,clubId);
+                    newPerson = new Athlete(0,surname,firstName,address,gender,birthday,email,weight,bloodType,danDegree,worldRanking);
                     break;
 
                 case COMPETITION_MANAGER:

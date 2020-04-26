@@ -1,6 +1,10 @@
 package com.demo.entity;
 
+import com.demo.entity.person.Athlete;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="Club")
@@ -12,6 +16,9 @@ public class Club {
     private String clubId;
     private String name;
     private String address;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    private List<Athlete> athletes = new ArrayList<>();
 
     public Club(long id, String clubId, String name, String address) {
         this.id = id;
@@ -53,5 +60,21 @@ public class Club {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<Athlete> getAthletes() {
+        return athletes;
+    }
+
+    public void setAthlete(List<Athlete> athletes) {
+        this.athletes = athletes;
+    }
+
+    public void addAthlete(Athlete athlete){
+        athletes.add(athlete);
+    }
+
+    public void removeAthlete(Athlete athlete){
+        athletes.remove(athlete);
     }
 }

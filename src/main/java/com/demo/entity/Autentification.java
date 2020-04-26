@@ -1,4 +1,6 @@
 package com.demo.entity;
+import com.demo.entity.person.Person;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,11 +10,16 @@ public class Autentification {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long autentificationId;
-    private String email;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "personId")
+    private Person person;
+
     private String password;
 
-    public Autentification(String email, String password) {
-        this.email = email;
+    public Autentification(long autentificationId, Person person, String password) {
+        this.autentificationId = autentificationId;
+        this.person = person;
         this.password = password;
     }
 
@@ -27,14 +34,6 @@ public class Autentification {
         this.autentificationId = autentificationId;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -42,4 +41,8 @@ public class Autentification {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Person getPerson() { return person; }
+
+    public void setPerson(Person person) { this.person = person; }
 }

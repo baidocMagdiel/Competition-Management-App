@@ -9,8 +9,8 @@ public class TeamCategory extends Category {
     private int noOfTeamMembers;
     private int noOfMatches;
 
-    public TeamCategory(long categoryId, String name, String ageRange, float matchTime, int noOfTeamMembers, int noOfMatches) {
-        super(categoryId, name, ageRange, matchTime);
+    public TeamCategory(long categoryId, String name, String ageRange, String gender, String categoryType, float matchTime, int noOfTeamMembers, int noOfMatches) {
+        super(categoryId, name, ageRange, gender, categoryType, matchTime);
         this.noOfTeamMembers = noOfTeamMembers;
         this.noOfMatches = noOfMatches;
     }

@@ -2,7 +2,9 @@ package com.demo.service;
 
 import com.demo.entity.Competition;
 import com.demo.entity.category.Category;
+import com.demo.entity.person.Person;
 import com.demo.repository.CompetitionRepository;
+import com.demo.service.email.NotificationCentre;
 import com.demo.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,12 @@ public class CompetitionService {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    NotificationCentre notificationCentre;
+
+    @Autowired
+    PersonService personService;
 
     public String create(String name,
                          String startDateStr,
@@ -56,6 +64,12 @@ public class CompetitionService {
             }
         }
         competitionRepository.save(newCompetition);
+
+        //notificare
+        List<Person> personList = personService.findAll();
+        if(personList != null){
+            notificationCentre.addNewCompetition(newCompetition,personList);
+        }
         return SUCCES;
     }
 
@@ -109,7 +123,7 @@ public class CompetitionService {
         }
 
         if(competition.getCategories().contains(category)){
-            return "[WARNING]:" + category.getName() + " category is already assigned to" + competition.getName() + "competition.";
+            return "[WARNING]:" + category.getName() + " category is already assigned to " + competition.getName() + "competition.";
         }
 
         competition.addCategory(category);
@@ -130,7 +144,7 @@ public class CompetitionService {
         }
 
         if(!competition.getCategories().contains(category)){
-            return "[WARNING]:" + category.getName() + " category is not assigned to" + competition.getName() + "competition.";
+            return "[WARNING]:" + category.getName() + " category is not assigned to " + competition.getName() + "competition.";
         }
 
         competition.removeCategory(category);

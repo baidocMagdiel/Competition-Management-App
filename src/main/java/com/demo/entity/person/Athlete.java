@@ -14,15 +14,13 @@ public class Athlete extends Person {
     private String bloodType;
     private String DanDegree;
     private int worldRanking;
-    private String clubId;
-    
-    public Athlete(long personId, String surname, String firstName, String address, String gender, Date birthday, String email, double weight, String bloodType, String danDegree, int worldRanking, String clubId) {
+
+    public Athlete(long personId, String surname, String firstName, String address, String gender, Date birthday, String email, double weight, String bloodType, String danDegree, int worldRanking) {
         super(personId, surname, firstName, address, gender, birthday, email);
         this.weight = weight;
         this.bloodType = bloodType;
         DanDegree = danDegree;
         this.worldRanking = worldRanking;
-        this.clubId = clubId;
     }
 
     public Athlete() {
@@ -60,11 +58,4 @@ public class Athlete extends Person {
         this.worldRanking = worldRanking;
     }
 
-    public String getClubId() {
-        return clubId;
-    }
-
-    public void setClubId(String clubId) {
-        this.clubId = clubId;
-    }
 }

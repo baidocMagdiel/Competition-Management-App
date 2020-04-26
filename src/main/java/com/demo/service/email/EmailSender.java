@@ -71,8 +71,6 @@ public class EmailSender implements Observer {
         try {
             sendMail(person,competition);
         } catch (Exception e) {
-
-            e.printStackTrace();
             return -1;
         }
         return 0;

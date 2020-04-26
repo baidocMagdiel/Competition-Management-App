@@ -1,16 +1,10 @@
 package com.demo.entity;
 
-<<<<<<< HEAD
 import com.demo.entity.category.Category;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-=======
-import javax.persistence.*;
-import java.util.Date;
->>>>>>> d08b3eea09340023bd4cca200e3311a4099cadb2
 
 @Entity
 @Table(name="Competition")
