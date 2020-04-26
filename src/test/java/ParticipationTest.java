@@ -30,6 +30,9 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+/**
+ * Clasa de test pentru participari la competiti
+ */
 public class ParticipationTest {
 
     @InjectMocks
@@ -47,18 +50,22 @@ public class ParticipationTest {
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @BeforeEach
-    void setUp()
-    {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
+    /**
+     * Testez adaugarea unei participari la competitie
+     *
+     * @throws ParseException exceptie de parsare
+     */
     @Test
     public void addParticipationTest() throws ParseException {
 
         Date date = new Date();
-        Competition competition = new Competition(6,"World Championship",date,date,date,"SIBIU","FRK",0,0,ACTIVE);
-        Category category1 = new TeamCategory(0,"KATA","16-17","Female",KATA,5,3,1);
-        Category category2 = new SingleCategory(10,"KATA","16-17","Female",KATA,5,"");
+        Competition competition = new Competition(6, "World Championship", date, date, date, "SIBIU", "FRK", 0, 0, ACTIVE);
+        Category category1 = new TeamCategory(0, "KATA", "16-17", "Female", KATA, 5, 3, 1);
+        Category category2 = new SingleCategory(10, "KATA", "16-17", "Female", KATA, 5, "");
         competition.getCategories().add(category1);
         competition.getCategories().add(category2);
         List<Long> personId = new ArrayList<>();
@@ -68,13 +75,13 @@ public class ParticipationTest {
         Date date1 = simpleDateFormat.parse("12/12/2003");
 
         Participation participation = new Participation();
-        Person athlete = new Athlete(12,"Ion","Ion","str.Baritiu 24 Cluj-Napoca","Female",date1,"ion.ion@gmail.com",78,"A2","2KYU",100);
+        Person athlete = new Athlete(12, "Ion", "Ion", "str.Baritiu 24 Cluj-Napoca", "Female", date1, "ion.ion@gmail.com", 78, "A2", "2KYU", 100);
 
         when(personService.findById(athlete.getPersonId())).thenReturn(athlete);
         when(competitionService.findById(competition.getCompetitionId())).thenReturn(competition);
         when(categoryService.findById(category2.getCategoryId())).thenReturn(category2);
         when(participationRepository.save(any(Participation.class))).thenReturn(participation);
-        String status = participationService.addParticipation("",personId,competition.getCompetitionId(),category2.getCategoryId(),0,0);
-        assertEquals(SUCCES,status);
+        String status = participationService.addParticipation("", personId, competition.getCompetitionId(), category2.getCategoryId(), 0, 0);
+        assertEquals(SUCCES, status);
     }
 }

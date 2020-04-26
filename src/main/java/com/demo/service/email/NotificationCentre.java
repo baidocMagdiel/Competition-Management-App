@@ -13,18 +13,19 @@ public class NotificationCentre {
     //Observer
     @Autowired
     EmailSender emailSender = new EmailSender();
-    
+
     /**
      * Notifica toti antrenorii de adaugarea unei noi competitii
+     *
      * @param newComCopmetition noua competitie ce este adaugata
-     * @param personList lista de persoane ce trebuie notificate
+     * @param personList        lista de persoane ce trebuie notificate
      * @return -1 in caz de esec, 0 daca au fost notificati toti antrenorii
      */
-    public int addNewCompetition(Competition newComCopmetition, List<Person> personList){
+    public int addNewCompetition(Competition newComCopmetition, List<Person> personList) {
 
-        for(Person p: personList){
-            if( emailSender.update(p, newComCopmetition) == -1){
-              return -1;
+        for (Person p : personList) {
+            if (emailSender.update(p, newComCopmetition) == -1) {
+                return -1;
             }
         }
         return 0;

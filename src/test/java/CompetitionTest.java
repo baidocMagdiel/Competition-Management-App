@@ -23,7 +23,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
-
+/**
+ * Clasa de test a Competitiei
+ */
 public class CompetitionTest {
 
     @InjectMocks
@@ -45,71 +47,85 @@ public class CompetitionTest {
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @BeforeEach
-    void setUp()
-    {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
+    /**
+     * Testez crearea unei competitii
+     */
     @Test
-    public void insertCompetitionTest(){
+    public void insertCompetitionTest() {
 
         Competition competition = new Competition();
         when(personService.findAll()).thenReturn(null);
         when(competitionRepository.save(any(Competition.class))).thenReturn(competition);
-        when(notificationCentre.addNewCompetition(any(Competition.class),anyList())).thenReturn(0);
-        String status = competitionService.create("World Championship","12/12/2020","12/12/2020","12/12/2020","SIBIU","FRK",0,0,ACTIVE);
-        assertEquals(SUCCES,status);
+        when(notificationCentre.addNewCompetition(any(Competition.class), anyList())).thenReturn(0);
+        String status = competitionService.create("World Championship", "12/12/2020", "12/12/2020", "12/12/2020", "SIBIU", "FRK", 0, 0, ACTIVE);
+        assertEquals(SUCCES, status);
     }
 
+    /**
+     * Testez actualizarea unei competitii
+     */
     @Test
-    public void updateCompetitionTest(){
+    public void updateCompetitionTest() {
 
         Date date = new Date();
-        Competition competition = new Competition(6,"World Championship",date,date,date,"SIBIU","FRK",0,0,ACTIVE);
+        Competition competition = new Competition(6, "World Championship", date, date, date, "SIBIU", "FRK", 0, 0, ACTIVE);
         when(competitionRepository.findById(competition.getCompetitionId())).thenReturn(java.util.Optional.of(competition));
         when(competitionRepository.save(any(Competition.class))).thenReturn(competition);
-        String status = competitionService.updateCompetition(6,"World Championship","12/12/2020","12/12/2020","12/12/2020","SIBIU","FRK",0,0,ACTIVE);
-        assertEquals(SUCCES,status);
+        String status = competitionService.updateCompetition(6, "World Championship", "12/12/2020", "12/12/2020", "12/12/2020", "SIBIU", "FRK", 0, 0, ACTIVE);
+        assertEquals(SUCCES, status);
     }
 
+    /**
+     * Testez adaugarea unei categorii la competitie
+     */
     @Test
-    public void addCategoryTest(){
+    public void addCategoryTest() {
 
         Date date = new Date();
-        Competition competition = new Competition(6,"World Championship",date,date,date,"SIBIU","FRK",0,0,ACTIVE);
-        Category category = new TeamCategory(0,"KATA","16-17","Female",KATA,5,3,1);
+        Competition competition = new Competition(6, "World Championship", date, date, date, "SIBIU", "FRK", 0, 0, ACTIVE);
+        Category category = new TeamCategory(0, "KATA", "16-17", "Female", KATA, 5, 3, 1);
 
         when(categoryService.findById(category.getCategoryId())).thenReturn(category);
         when(competitionRepository.save(any(Competition.class))).thenReturn(competition);
         when(competitionRepository.findById(competition.getCompetitionId())).thenReturn(java.util.Optional.of(competition));
 
-        String status = competitionService.addCategory(competition.getCompetitionId(),category.getCategoryId());
-        assertEquals(SUCCES,status);
+        String status = competitionService.addCategory(competition.getCompetitionId(), category.getCategoryId());
+        assertEquals(SUCCES, status);
     }
 
+    /**
+     * Testez stergerea unei categorii
+     */
     @Test
-    public void removeCategoryTest(){
+    public void removeCategoryTest() {
 
         Date date = new Date();
-        Competition competition = new Competition(6,"World Championship",date,date,date,"SIBIU","FRK",0,0,ACTIVE);
-        Category category = new TeamCategory(0,"KATA","16-17","Female",KATA,5,3,1);
+        Competition competition = new Competition(6, "World Championship", date, date, date, "SIBIU", "FRK", 0, 0, ACTIVE);
+        Category category = new TeamCategory(0, "KATA", "16-17", "Female", KATA, 5, 3, 1);
         competition.getCategories().add(category);
 
         when(categoryService.findById(category.getCategoryId())).thenReturn(category);
         when(competitionRepository.save(any(Competition.class))).thenReturn(competition);
         when(competitionRepository.findById(competition.getCompetitionId())).thenReturn(java.util.Optional.of(competition));
 
-        String status = competitionService.removeCategory(competition.getCompetitionId(),category.getCategoryId());
-        assertEquals(SUCCES,status);
+        String status = competitionService.removeCategory(competition.getCompetitionId(), category.getCategoryId());
+        assertEquals(SUCCES, status);
     }
 
+    /**
+     * Testez stergerea unei competitii dupa id
+     */
     @Test
-    public void deleteByIdTest(){
+    public void deleteByIdTest() {
 
         Date date = new Date();
-        Competition competition = new Competition(0,"World Championship",date,date,date,"SIBIU","FRK",0,0,ACTIVE);
+        Competition competition = new Competition(0, "World Championship", date, date, date, "SIBIU", "FRK", 0, 0, ACTIVE);
         when(competitionRepository.findById(competition.getCompetitionId())).thenReturn(java.util.Optional.of(competition));
         String status = competitionService.deleteById(0);
-        assertEquals(SUCCES,status);
+        assertEquals(SUCCES, status);
     }
 }

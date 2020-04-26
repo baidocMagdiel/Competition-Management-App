@@ -2,7 +2,6 @@ import com.demo.entity.person.Coach;
 import com.demo.entity.person.Person;
 import com.demo.repository.PersonRepository;
 import com.demo.service.PersonService;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,8 +15,12 @@ import java.util.Date;
 
 import static com.demo.util.Constant.*;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
+/**
+ * Clasa de test pentru persoana
+ */
 public class PersonTest {
 
     @InjectMocks
@@ -30,66 +33,83 @@ public class PersonTest {
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @BeforeEach
-    void setUp()
-    {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
+    /**
+     * Testez inserarea unei persoane cu tip corect
+     */
     @Test
-    public void insertCorrectPersonTypeTest(){
+    public void insertCorrectPersonTypeTest() {
 
         Person person = new Person();
         when(personRepository.save(any(Person.class))).thenReturn(person);
-        String status = personService.create(COACH,"Ion","Ion","str.Batitiu 24 Cluj-Napoca","12/12/2020","ion.ion@gmail.com","Male",0,"",0,"");
-        assertEquals(SUCCES,status);
+        String status = personService.create(COACH, "Ion", "Ion", "str.Batitiu 24 Cluj-Napoca", "12/12/2020", "ion.ion@gmail.com", "Male", 0, "", 0, "");
+        assertEquals(SUCCES, status);
     }
 
+    /**
+     * Testez inserarea unei persoane cu tip incorect
+     */
     @Test
-    public void insertWrongPersonTypeTest(){
+    public void insertWrongPersonTypeTest() {
 
         Person person = new Person();
         when(personRepository.save(any(Person.class))).thenReturn(person);
-        String status = personService.create("supererou","Ion","Ion","str.Batitiu 24 Cluj-Napoca","12/12/2020","ion.ion@gmail.com","Male",0,"",0,"");
-        assertEquals("[ERROR]:Unknown/unsupported person-type [supererou]",status);
+        String status = personService.create("supererou", "Ion", "Ion", "str.Batitiu 24 Cluj-Napoca", "12/12/2020", "ion.ion@gmail.com", "Male", 0, "", 0, "");
+        assertEquals("[ERROR]:Unknown/unsupported person-type [supererou]", status);
     }
 
+    /**
+     * Testez inserarea unei persoane avand camputi goale
+     */
     @Test
-    public void insertBlackFieldTest(){
+    public void insertBlackFieldTest() {
 
         Person person = new Person();
         when(personRepository.save(any(Person.class))).thenReturn(person);
-        String status = personService.create(ATHLETE,"Ion","Ion","","12/12/2020","ion.ion@gmail.com","Male",0,"",0,"");
-        assertEquals(EMPTY_FIELD,status);
+        String status = personService.create(ATHLETE, "Ion", "Ion", "", "12/12/2020", "ion.ion@gmail.com", "Male", 0, "", 0, "");
+        assertEquals(EMPTY_FIELD, status);
     }
 
+    /**
+     * Testez actualizarea reusita unei persoane
+     */
     @Test
-    public void passedUpdateTest(){
+    public void passedUpdateTest() {
 
-        Person person = new Coach(0,"Ion","Ion","str.Baritiu 24 Cluj-Napoca","Male",new Date(),"ion.ion@gmail.com");
+        Person person = new Coach(0, "Ion", "Ion", "str.Baritiu 24 Cluj-Napoca", "Male", new Date(), "ion.ion@gmail.com");
         when(personRepository.findByEmail(person.getEmail())).thenReturn(person);
         when(personRepository.save(any(Person.class))).thenReturn(person);
-        String status = personService.updatePerson(COACH,"Ion","Ion","str.Baritiu 24 Cluj-Napoca","12/12/2020","ion.ion@gmail.com","Male",0,"",0,"");
-        assertEquals(SUCCES,status);
+        String status = personService.updatePerson(COACH, "Ion", "Ion", "str.Baritiu 24 Cluj-Napoca", "12/12/2020", "ion.ion@gmail.com", "Male", 0, "", 0, "");
+        assertEquals(SUCCES, status);
     }
 
+    /**
+     * Testez actualizarea esuata unei persoane
+     */
     @Test
-    public void failedUpdateTest(){
+    public void failedUpdateTest() {
 
-        Person person = new Coach(0,"Ion","Ion","str.Baritiu 24 Cluj-Napoca","Male",new Date(),"ion.ion@gmail.com");
+        Person person = new Coach(0, "Ion", "Ion", "str.Baritiu 24 Cluj-Napoca", "Male", new Date(), "ion.ion@gmail.com");
         when(personRepository.findByEmail(person.getEmail())).thenReturn(person);
         when(personRepository.save(any(Person.class))).thenReturn(person);
-        String status = personService.updatePerson(ATHLETE,"Ion","Ion","str.Baritiu 24 Cluj-Napoca","12/12/2020","ion.ion@gmail.com","Male",0,"",0,"");
-        assertEquals("[ERROR]:The person does not have the same type.",status);
+        String status = personService.updatePerson(ATHLETE, "Ion", "Ion", "str.Baritiu 24 Cluj-Napoca", "12/12/2020", "ion.ion@gmail.com", "Male", 0, "", 0, "");
+        assertEquals("[ERROR]:The person does not have the same type.", status);
     }
 
+    /**
+     * Testez stergerea unei persoane dupa email
+     */
     @Test
-    public void deleteByEmailTest(){
+    public void deleteByEmailTest() {
 
-        Person person = new Coach(0,"Ion","Ion","str.Baritiu 24 Cluj-Napoca","Male",new Date(),"ion.ion@gmail.com");
+        Person person = new Coach(0, "Ion", "Ion", "str.Baritiu 24 Cluj-Napoca", "Male", new Date(), "ion.ion@gmail.com");
         when(personRepository.findByEmail(person.getEmail())).thenReturn(person);
         when(personRepository.save(any(Person.class))).thenReturn(person);
         String status = personService.deleteByEmail("ion.ion@gmail.com");
-        assertEquals(SUCCES,status);
+        assertEquals(SUCCES, status);
     }
 
 }

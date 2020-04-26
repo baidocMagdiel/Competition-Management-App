@@ -27,6 +27,22 @@ public class PersonService {
 
     private PersonFactory personFactory = new PersonFactory();
 
+    /**
+     * Metoda pentru crearea unei persoane
+     *
+     * @param personType   tipul persoanei
+     * @param firstName    prenume
+     * @param surname      nume de familie
+     * @param address      adresa
+     * @param birthdayStr  data de nastere
+     * @param email        email
+     * @param gender       sex
+     * @param weight       greutate
+     * @param danDegree    grad
+     * @param worldRanking loc in clasamentul mondial
+     * @param bloodType    grupa sanguina
+     * @return SUCCES sau mesaj de eroare
+     */
     public String create(String personType,
                          String firstName,
                          String surname,
@@ -37,7 +53,7 @@ public class PersonService {
                          double weight,
                          String danDegree,
                          int worldRanking,
-                         String bloodType){
+                         String bloodType) {
 
         SimpleDateFormat dateformat = new SimpleDateFormat(DATE_FORMAT);
         Date birthday = null;
@@ -47,15 +63,15 @@ public class PersonService {
             return ERR_DATE_FORMAT;
         }
 
-        Person newPerson  = personFactory.createPerson(personType, firstName, surname, address, birthday, email, gender, weight, danDegree, worldRanking, bloodType);
-        if(newPerson == null) return "[ERROR]:Unknown/unsupported person-type [" + personType + "]" ;
+        Person newPerson = personFactory.createPerson(personType, firstName, surname, address, birthday, email, gender, weight, danDegree, worldRanking, bloodType);
+        if (newPerson == null) return "[ERROR]:Unknown/unsupported person-type [" + personType + "]";
 
         String flag = Validator.checkPerson(newPerson);
-        if(!flag.equals(SUCCES)) return flag;
+        if (!flag.equals(SUCCES)) return flag;
 
         List<Person> allPersons = personRepository.findAll();
-        for(Person p : allPersons){
-            if(p.getEmail().equals(newPerson.getEmail())){
+        for (Person p : allPersons) {
+            if (p.getEmail().equals(newPerson.getEmail())) {
                 return EXISTS + newPerson.getEmail();
             }
         }
@@ -64,6 +80,22 @@ public class PersonService {
         return SUCCES;
     }
 
+    /**
+     * Metoda pentru actualizarea unei persoane
+     *
+     * @param personType   tipul persoanei
+     * @param firstName    prenume
+     * @param surname      nume de familie
+     * @param address      adresa
+     * @param birthdayStr  data de nastere
+     * @param email        email
+     * @param gender       sex
+     * @param weight       greutate
+     * @param danDegree    grad
+     * @param worldRanking loc in clasamentul mondial
+     * @param bloodType    grupa sanguina
+     * @return SUCCES sau mesaj de eroare
+     */
     public String updatePerson(String personType,
                                String firstName,
                                String surname,
@@ -74,11 +106,11 @@ public class PersonService {
                                double weight,
                                String danDegree,
                                int worldRanking,
-                               String bloodType){
+                               String bloodType) {
 
         Person person = personRepository.findByEmail(email);
 
-        if (person == null){
+        if (person == null) {
             return "Person with email " + email + " not found.";
         }
 
@@ -90,52 +122,71 @@ public class PersonService {
             return ERR_DATE_FORMAT;
         }
 
-        Person newPerson  = personFactory.createPerson(personType, firstName, surname, address, birthday, email, gender, weight, danDegree, worldRanking, bloodType);
-        if(newPerson == null) return "[ERROR]:Unknown/unsupported person-type [" + personType + "]." ;
+        Person newPerson = personFactory.createPerson(personType, firstName, surname, address, birthday, email, gender, weight, danDegree, worldRanking, bloodType);
+        if (newPerson == null) return "[ERROR]:Unknown/unsupported person-type [" + personType + "].";
 
-        if(newPerson.getClass() != person.getClass()) return "[ERROR]:The person does not have the same type.";
+        if (newPerson.getClass() != person.getClass()) return "[ERROR]:The person does not have the same type.";
 
         String flag = Validator.checkPerson(newPerson);
-        if(!flag.equals(SUCCES)) return flag;
+        if (!flag.equals(SUCCES)) return flag;
 
         newPerson.setPersonId(person.getPersonId());
         personRepository.save(newPerson);
         return SUCCES;
     }
 
-    public String deleteByEmail(String email){
+    /**
+     * Metoda pentru stergerea unei persoane dupa email
+     *
+     * @param email adresa de email
+     * @return SUCCES sau mesaj de eroare
+     */
+    public String deleteByEmail(String email) {
 
-       Person person = personRepository.findByEmail(email);
-        if (person == null){
+        Person person = personRepository.findByEmail(email);
+        if (person == null) {
             return "Person with email " + email + " not found.";
         }
         personRepository.delete(person);
         return SUCCES;
     }
 
-    public String deleteById(long personId){
+    /**
+     * Metoda pentru stergerea unei persoane dupa id
+     *
+     * @param personId id-ul persoanei
+     * @return SUCCES sau mesaj de eroare
+     */
+    public String deleteById(long personId) {
 
         Person person = personRepository.findById(personId).orElse(null);
-        if (person == null){
+        if (person == null) {
             return "Person with id " + personId + " not found.";
         }
         personRepository.delete(person);
         return SUCCES;
     }
 
-    public String addClub(long personId, long clubId){
+    /**
+     * Asignarea unui antrenor la un club
+     *
+     * @param personId id-ul antrenorului
+     * @param clubId   id-ul clubului
+     * @return SUCCES sau mesaj de eroare
+     */
+    public String addClub(long personId, long clubId) {
 
         Person person = personRepository.findById(personId).orElse(null);
-        if (person == null){
+        if (person == null) {
             return "Person with id " + personId + " not found.";
         }
 
         Club club = clubService.findById(clubId);
-        if (club == null){
+        if (club == null) {
             return "Club with id " + clubId + " not found.";
         }
 
-        if(!(person instanceof Coach)){
+        if (!(person instanceof Coach)) {
             return "[ERROR]:The person must be a coach.";
         }
 
@@ -144,15 +195,32 @@ public class PersonService {
         return SUCCES;
     }
 
-    public List<Person> findAll(){
+    /**
+     * Metoda pentru determinarea tuturor persoanelor din baza de date
+     *
+     * @return lista persoanelor
+     */
+    public List<Person> findAll() {
         return personRepository.findAll();
     }
 
-    public Person findById(long personId){
+    /**
+     * Metoda pentru cautarea unei persoane dupa id
+     *
+     * @param personId id-ul peroanei
+     * @return perosana sau null
+     */
+    public Person findById(long personId) {
         return personRepository.findById(personId).orElse(null);
     }
 
-    public Person findByEmail(String email){
+    /**
+     * Metoda pentru cautarea unei persoane dupa email
+     *
+     * @param email adresa de email
+     * @return perosana sau null
+     */
+    public Person findByEmail(String email) {
         return personRepository.findByEmail(email);
     }
 

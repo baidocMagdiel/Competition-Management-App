@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="Club")
+@Table(name = "Club")
 public class Club {
 
     @Id
@@ -70,11 +70,11 @@ public class Club {
         this.athletes = athletes;
     }
 
-    public void addAthlete(Athlete athlete){
+    public void addAthlete(Athlete athlete) {
         athletes.add(athlete);
     }
 
-    public void removeAthlete(Athlete athlete){
+    public void removeAthlete(Athlete athlete) {
         athletes.remove(athlete);
     }
 }

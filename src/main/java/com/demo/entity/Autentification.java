@@ -1,10 +1,11 @@
 package com.demo.entity;
+
 import com.demo.entity.person.Person;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="Autentification")
+@Table(name = "Account")
 public class Autentification {
 
     @Id
@@ -42,7 +43,11 @@ public class Autentification {
         this.password = password;
     }
 
-    public Person getPerson() { return person; }
+    public Person getPerson() {
+        return person;
+    }
 
-    public void setPerson(Person person) { this.person = person; }
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 }

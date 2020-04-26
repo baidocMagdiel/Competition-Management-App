@@ -22,6 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+/**
+ * Clasa de test pentru observer
+ */
 public class ObserverTest {
 
     @InjectMocks
@@ -39,8 +42,7 @@ public class ObserverTest {
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @BeforeEach
-    void setUp()
-    {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
@@ -51,12 +53,12 @@ public class ObserverTest {
     public void testObserver() {
 
 
-        Person person1 = new Coach(0,"Ion","Ion","str.Baritiu 24 Cluj-Napoca","Male",new Date(),"ion.ion@gmail.com");
-        Person person2 = new Coach(1,"Popescu","Alex","str.Targului 12 Sibiu","Male",new Date(),"poescu.alex@gmail.com");
-        Person person3 = new Coach(2,"Toma","Gheorhge","str.Dambovitei 20 Cluj-Napoca","Male",new Date(),"toma.gheorghe@gmail.com");
+        Person person1 = new Coach(0, "Ion", "Ion", "str.Baritiu 24 Cluj-Napoca", "Male", new Date(), "ion.ion@gmail.com");
+        Person person2 = new Coach(1, "Popescu", "Alex", "str.Targului 12 Sibiu", "Male", new Date(), "poescu.alex@gmail.com");
+        Person person3 = new Coach(2, "Toma", "Gheorhge", "str.Dambovitei 20 Cluj-Napoca", "Male", new Date(), "toma.gheorghe@gmail.com");
 
         Date date = new Date();
-        Competition newCompetition = new Competition(6,"World Championship",date,date,date,"SIBIU","FRK",0,0,ACTIVE);
+        Competition newCompetition = new Competition(6, "World Championship", date, date, date, "SIBIU", "FRK", 0, 0, ACTIVE);
 
         List<Person> personList = new ArrayList<>();
         personList.add(person1);
@@ -65,8 +67,8 @@ public class ObserverTest {
 
         when(emailSender.update(any(Person.class), any(Competition.class))).thenReturn(0);
 
-        int status = notificationCentre.addNewCompetition(newCompetition,personList);
-        assertEquals(0,status);
+        int status = notificationCentre.addNewCompetition(newCompetition, personList);
+        assertEquals(0, status);
     }
 
 }

@@ -1,7 +1,5 @@
 package com.demo.entity.person;
 
-import com.demo.entity.Competition;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.util.Date;
@@ -12,14 +10,14 @@ public class Athlete extends Person {
 
     private double weight;
     private String bloodType;
-    private String DanDegree;
+    private String danDegree;
     private int worldRanking;
 
     public Athlete(long personId, String surname, String firstName, String address, String gender, Date birthday, String email, double weight, String bloodType, String danDegree, int worldRanking) {
         super(personId, surname, firstName, address, gender, birthday, email);
         this.weight = weight;
         this.bloodType = bloodType;
-        DanDegree = danDegree;
+        this.danDegree = danDegree;
         this.worldRanking = worldRanking;
     }
 
@@ -43,11 +41,11 @@ public class Athlete extends Person {
     }
 
     public String getDanDegree() {
-        return DanDegree;
+        return danDegree;
     }
 
     public void setDanDegree(String danDegree) {
-        DanDegree = danDegree;
+        danDegree = danDegree;
     }
 
     public int getWorldRanking() {

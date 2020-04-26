@@ -1,13 +1,14 @@
 package com.demo.entity;
 
 import com.demo.entity.category.Category;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="Competition")
+@Table(name = "Competition")
 public class Competition {
 
     @Id
@@ -129,11 +130,11 @@ public class Competition {
         this.categories = categories;
     }
 
-    public void addCategory(Category category){
+    public void addCategory(Category category) {
         categories.add(category);
     }
 
-    public void removeCategory(Category category){
+    public void removeCategory(Category category) {
         categories.remove(category);
     }
 }

@@ -1,5 +1,8 @@
 package com.demo.util;
 
+/**
+ * Clasa pentru definirea constantelor
+ */
 public final class Constant {
 
     public static final String VALID = "VALID";

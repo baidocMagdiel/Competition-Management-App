@@ -17,19 +17,19 @@ import static com.demo.util.Constant.*;
 
 public class Validator {
 
-    public static String checkPerson(Person person){
+    public static String checkPerson(Person person) {
 
-        if(person.getFirstName().isEmpty() || person.getSurname().isEmpty() || person.getEmail().isEmpty() || person.getGender().isEmpty() || person.getAddress().isEmpty()){
+        if (person.getFirstName().isEmpty() || person.getSurname().isEmpty() || person.getEmail().isEmpty() || person.getGender().isEmpty() || person.getAddress().isEmpty()) {
             return EMPTY_FIELD;
         }
 
-        if(checkEmail(person.getEmail()) == false){
+        if (checkEmail(person.getEmail()) == false) {
             return EMAIL_INCORRECT;
         }
         return SUCCES;
     }
 
-    public static boolean checkEmail(String email){
+    public static boolean checkEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pat = Pattern.compile(emailRegex);
         return pat.matcher(email).matches();
@@ -37,7 +37,7 @@ public class Validator {
 
     public static String checkCategory(Category newCategory) {
 
-        if(newCategory.getName().isEmpty() || newCategory.getAgeRange().isEmpty()){
+        if (newCategory.getName().isEmpty() || newCategory.getAgeRange().isEmpty()) {
             return EMPTY_FIELD;
         }
         return SUCCES;
@@ -45,65 +45,65 @@ public class Validator {
 
     public static String checkCompetition(Competition newCompetition) {
 
-        if(newCompetition.getFederation().isEmpty() || newCompetition.getPlace().isEmpty() || newCompetition.getName().isEmpty()){
+        if (newCompetition.getFederation().isEmpty() || newCompetition.getPlace().isEmpty() || newCompetition.getName().isEmpty()) {
             return EMPTY_FIELD;
         }
 
-        if(newCompetition.getStartDate() == null || newCompetition.getEndDate() == null || newCompetition.getLastRegistrationDate() == null){
-            return  EMPTY_FIELD;
+        if (newCompetition.getStartDate() == null || newCompetition.getEndDate() == null || newCompetition.getLastRegistrationDate() == null) {
+            return EMPTY_FIELD;
         }
 
-        if(newCompetition.getStartDate().after(newCompetition.getEndDate()) || newCompetition.getLastRegistrationDate().after(newCompetition.getStartDate())){
+        if (newCompetition.getStartDate().after(newCompetition.getEndDate()) || newCompetition.getLastRegistrationDate().after(newCompetition.getStartDate())) {
             return ERR_DATE_RANGE;
         }
         return SUCCES;
     }
 
-    public static String checkParticipation(Participation participation){
+    public static String checkParticipation(Participation participation) {
 
         Date currentTime = new Date();
-        if(participation.getCompetition().getLastRegistrationDate().after(currentTime)){
+        if (participation.getCompetition().getLastRegistrationDate().after(currentTime)) {
             return "[ERROR]:Registration time is up.";
         }
 
-        if(participation.getCategory() instanceof TeamCategory){
-            if(((TeamCategory) participation.getCategory()).getNoOfTeamMembers() != participation.getAthlete().size()){
+        if (participation.getCategory() instanceof TeamCategory) {
+            if (((TeamCategory) participation.getCategory()).getNoOfTeamMembers() != participation.getAthlete().size()) {
                 return "[ERROR]:Your team must contain " + ((TeamCategory) participation.getCategory()).getNoOfTeamMembers() + " members, not " + participation.getAthlete().size();
             }
 
-            if(participation.getName().isEmpty()){
+            if (participation.getName().isEmpty()) {
                 return "[ERROR]:Your team must have a name.";
             }
         }
 
-        if(participation.getCategory() instanceof SingleCategory){
-            if(participation.getAthlete().size() != 1){
+        if (participation.getCategory() instanceof SingleCategory) {
+            if (participation.getAthlete().size() != 1) {
                 return "[ERROR]:Only one athlete registers for the individual category.";
             }
 
-            if(participation.getCategory().getCategoryType().equals(KUMITE)){
+            if (participation.getCategory().getCategoryType().equals(KUMITE)) {
                 String[] weightRange = ((SingleCategory) participation.getCategory()).getWeightRange().split("-");
-                if(participation.getAthlete().get(0).getWeight() < Double.parseDouble(weightRange[0]) || participation.getAthlete().get(0).getWeight() > Double.parseDouble(weightRange[1])){
+                if (participation.getAthlete().get(0).getWeight() < Double.parseDouble(weightRange[0]) || participation.getAthlete().get(0).getWeight() > Double.parseDouble(weightRange[1])) {
                     return "[ERROR]:Athlete is incompatible for this category.Improper weight.";
                 }
             }
 
-            if(!participation.getAthlete().get(0).getGender().equals(participation.getCategory().getGender())){
+            if (!participation.getAthlete().get(0).getGender().equals(participation.getCategory().getGender())) {
                 return "[ERROR]:Athlete is incompatible for this category.Improper gender.";
             }
         }
 
         String[] ageRange = participation.getCategory().getAgeRange().split("-");
-        for(Athlete ath: participation.getAthlete()){
+        for (Athlete ath : participation.getAthlete()) {
             long diffInMillies = Math.abs(currentTime.getTime() - ath.getBirthday().getTime());
             long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            long age = diff/365;
+            long age = diff / 365;
 
-            if(age < Integer.parseInt(ageRange[0]) || age > Integer.parseInt(ageRange[1])){
-                return "[ERROR]:Athlete " + ath.getFirstName() + " " + ath.getSurname()  + " is incompatible for this category.Improper age. ";
+            if (age < Integer.parseInt(ageRange[0]) || age > Integer.parseInt(ageRange[1])) {
+                return "[ERROR]:Athlete " + ath.getFirstName() + " " + ath.getSurname() + " is incompatible for this category.Improper age. ";
             }
 
-            if(!ath.getGender().equals(participation.getCategory().getGender())){
+            if (!ath.getGender().equals(participation.getCategory().getGender())) {
                 return "[ERROR]:Athlete is incompatible for this category.Improper gender.";
             }
         }
@@ -111,15 +111,15 @@ public class Validator {
     }
 
     public static String checkClub(Club newClub) {
-        if(newClub.getAddress().isEmpty() || newClub.getName().isEmpty() || newClub.getClubId().isEmpty()){
+        if (newClub.getAddress().isEmpty() || newClub.getName().isEmpty() || newClub.getClubId().isEmpty()) {
             return EMPTY_FIELD;
         }
         return SUCCES;
     }
 
-    public static boolean checkPassword(String password){
+    public static boolean checkPassword(String password) {
 
-        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=-])(?=\\S+$).{8,}$";
         Pattern pat = Pattern.compile(passwordRegex);
         return pat.matcher(password).matches();
     }

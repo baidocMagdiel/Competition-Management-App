@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="Participation")
+@Table(name = "Participation")
 public class Participation {
 
     @Id
@@ -41,7 +41,9 @@ public class Participation {
     public Participation() {
     }
 
-    public long getId() { return id; }
+    public long getId() {
+        return id;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -79,11 +81,19 @@ public class Participation {
         this.rankingPoints = rankingPoints;
     }
 
-    public List<Athlete> getAthlete() { return athlete; }
+    public List<Athlete> getAthlete() {
+        return athlete;
+    }
 
-    public void setAthlete(List<Athlete> athlete) { this.athlete = athlete; }
+    public void setAthlete(List<Athlete> athlete) {
+        this.athlete = athlete;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 }

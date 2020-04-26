@@ -16,6 +16,9 @@ import java.util.List;
 
 import static com.demo.util.Constant.*;
 
+/**
+ * Clasa de service pentru Competitie
+ */
 @Service
 public class CompetitionService {
 
@@ -31,6 +34,20 @@ public class CompetitionService {
     @Autowired
     PersonService personService;
 
+    /**
+     * Metoda pentru crearea unei competitii
+     *
+     * @param name                    numele competitiei
+     * @param startDateStr            data de inceput
+     * @param endDateStr              data de sfarsit
+     * @param lastRegistrationDateStr ultima data de inregistrare
+     * @param place                   locul de desfasurare
+     * @param federation              federatia
+     * @param noOfEntries             numarul de intrari
+     * @param noOfCountries           numarul de tari/cluburi participante
+     * @param competitionStatus       statusul competiei
+     * @return SUCCES sau mesaj de eroare
+     */
     public String create(String name,
                          String startDateStr,
                          String endDateStr,
@@ -39,7 +56,7 @@ public class CompetitionService {
                          String federation,
                          int noOfEntries,
                          int noOfCountries,
-                         String competitionStatus){
+                         String competitionStatus) {
 
         SimpleDateFormat dateformat = new SimpleDateFormat(DATE_FORMAT);
         Date startDate = null;
@@ -53,13 +70,13 @@ public class CompetitionService {
             return ERR_DATE_FORMAT;
         }
 
-        Competition newCompetition =  new Competition(0,name,startDate,endDate,lastRegistrationDate,place,federation,noOfEntries,noOfCountries,competitionStatus);
+        Competition newCompetition = new Competition(0, name, startDate, endDate, lastRegistrationDate, place, federation, noOfEntries, noOfCountries, competitionStatus);
         String flag = Validator.checkCompetition(newCompetition);
-        if(!flag.equals(SUCCES)) return flag;
+        if (!flag.equals(SUCCES)) return flag;
 
         List<Competition> allCompetition = competitionRepository.findAll();
-        for(Competition c : allCompetition){
-            if(c.getName().equals(name)){
+        for (Competition c : allCompetition) {
+            if (c.getName().equals(name)) {
                 return EXISTS + "competition " + newCompetition.getName();
             }
         }
@@ -67,12 +84,27 @@ public class CompetitionService {
 
         //notificare
         List<Person> personList = personService.findAll();
-        if(personList != null){
-            notificationCentre.addNewCompetition(newCompetition,personList);
+        if (personList != null) {
+            notificationCentre.addNewCompetition(newCompetition, personList);
         }
         return SUCCES;
     }
 
+    /**
+     * Metoda pentru actualizarea unei competitii
+     *
+     * @param competitionId           id-ul competitiei
+     * @param name                    numele competitiei
+     * @param startDateStr            data de inceput
+     * @param endDateStr              data de sfarsit
+     * @param lastRegistrationDateStr ultima data de inregistrare
+     * @param place                   locul de desfasurare
+     * @param federation              federatia
+     * @param noOfEntries             numarul de intrari
+     * @param noOfCountries           numarul de tari/cluburi participante
+     * @param competitionStatus       statusul competiei
+     * @return SUCCES sau mesaj de eroare
+     */
     public String updateCompetition(long competitionId,
                                     String name,
                                     String startDateStr,
@@ -82,10 +114,10 @@ public class CompetitionService {
                                     String federation,
                                     int noOfEntries,
                                     int noOfCountries,
-                                    String competitionStatus){
+                                    String competitionStatus) {
 
         Competition competition = competitionRepository.findById(competitionId).orElse(null);
-        if (competition == null){
+        if (competition == null) {
             return "Copmetition with id " + competitionId + " not found.";
         }
 
@@ -101,28 +133,35 @@ public class CompetitionService {
             return ERR_DATE_FORMAT;
         }
 
-        Competition newCompetition =  new Competition(0,name,startDate,endDate,lastRegistrationDate,place,federation,noOfEntries,noOfCountries,competitionStatus);
+        Competition newCompetition = new Competition(0, name, startDate, endDate, lastRegistrationDate, place, federation, noOfEntries, noOfCountries, competitionStatus);
         String flag = Validator.checkCompetition(newCompetition);
-        if(!flag.equals(SUCCES)) return flag;
+        if (!flag.equals(SUCCES)) return flag;
 
         newCompetition.setCompetitionId(competitionId);
         competitionRepository.save(newCompetition);
         return SUCCES;
     }
 
-    public String addCategory(long competitionId, long categoryId){
+    /**
+     * Metoda pentru asignarea unei categorii la o competitie
+     *
+     * @param competitionId id-ul competitiei
+     * @param categoryId    id-ul categoriei
+     * @return SUCCES sau mesaj de eroare
+     */
+    public String addCategory(long competitionId, long categoryId) {
 
         Category category = categoryService.findById(categoryId);
-        if(category == null){
+        if (category == null) {
             return "[ERROR]:Category with id " + categoryId + " does not exist.";
         }
 
         Competition competition = competitionRepository.findById(competitionId).orElse(null);
-        if(competition == null){
+        if (competition == null) {
             return "[ERROR]:Competition with id " + competitionId + " does not exist.";
         }
 
-        if(competition.getCategories().contains(category)){
+        if (competition.getCategories().contains(category)) {
             return "[WARNING]:" + category.getName() + " category is already assigned to " + competition.getName() + "competition.";
         }
 
@@ -131,19 +170,26 @@ public class CompetitionService {
         return SUCCES;
     }
 
-    public String removeCategory(long competitionId, long categoryId){
+    /**
+     * Metoda pentru stergerea unei categorii din competitie
+     *
+     * @param competitionId id-ul competitiei
+     * @param categoryId    id-ul categoriei
+     * @return SUCCES sau mesaj de eroare
+     */
+    public String removeCategory(long competitionId, long categoryId) {
 
         Category category = categoryService.findById(categoryId);
-        if(category == null){
+        if (category == null) {
             return "[ERROR]:Category with id " + categoryId + " does not exist.";
         }
 
         Competition competition = competitionRepository.findById(competitionId).orElse(null);
-        if(competition == null){
+        if (competition == null) {
             return "[ERROR]:Competition with id " + competitionId + " does not exist.";
         }
 
-        if(!competition.getCategories().contains(category)){
+        if (!competition.getCategories().contains(category)) {
             return "[WARNING]:" + category.getName() + " category is not assigned to " + competition.getName() + "competition.";
         }
 
@@ -152,21 +198,38 @@ public class CompetitionService {
         return SUCCES;
     }
 
-    public String deleteById(long competitionId){
+    /**
+     * Metoda pentru stergerea unei competitii dupa id
+     *
+     * @param competitionId id-ul competitiei
+     * @return SUCCES sau mesaj de eroare
+     */
+    public String deleteById(long competitionId) {
 
         Competition competition = competitionRepository.findById(competitionId).orElse(null);
-        if (competition == null){
+        if (competition == null) {
             return "Competition with id " + competitionId + " not found.";
         }
         competitionRepository.delete(competition);
         return SUCCES;
     }
 
-    public List<Competition>findAll(){
+    /**
+     * Metoda pentru returnarea tuturor competitiilor din baza de date
+     *
+     * @return lista competitiilor
+     */
+    public List<Competition> findAll() {
         return competitionRepository.findAll();
     }
 
-    public Competition findById(long competitionId){
+    /**
+     * Metoda pentru cautarea unei competitii dupa id
+     *
+     * @param competitionId id-ul competitiei
+     * @return competitia sau null
+     */
+    public Competition findById(long competitionId) {
         return competitionRepository.findById(competitionId).orElse(null);
     }
 }

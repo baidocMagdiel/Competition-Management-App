@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @DiscriminatorValue("Coach")
-public class Coach extends  Person{
+public class Coach extends Person {
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "id")
@@ -28,7 +28,7 @@ public class Coach extends  Person{
         this.club = club;
     }
 
-    public void addClub(Club club){
+    public void addClub(Club club) {
         this.club = club;
     }
 

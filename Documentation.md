@@ -50,9 +50,9 @@ Vizitatorul, adica utilizator temporar,  va avea dreptul de a vizualiza doar rez
 ### **Diagrama de deployment**
 ![diagrama deployment](diagram/deployment.JPG)
 ### **Diagrama de clase**
-(in lucru)
+![diagrama use case antrenor](diagram/diag_clase.JPG)
 ### **Diagrama de pachete**
-(in lucru)
+![diagrama database](diagram/diag_pachete.JPG)
 ## Design-ul interfeței utilizator
 (se va dezvolta ulterior)
 ### Design patterns: 
@@ -62,12 +62,22 @@ Clasa SendMail implementeaza interfata Observer si contine o metoda pentru trimi
 ![diagrama database](diagram/observer.JPG)
 ### 2)Facade
 Folosit pentru a realiza conexiunea cu baza de date. Oferă o interfață simplificată a operațiilor asupra bazei de date.
+### 3)Factory Method
+Folosit pentru crearea persoanei si a categoriei pe baza tipului. <br>
+#### Crearea unei categorii
+Clasa CategoryService contine un atribut de tipul CategoryFactory si apeleaza metoda createCategory() pentru a crea o categorie(echipa sau individual).
+Metoda createCategory() primeste tipul categoriei alaturi de valori pentru instantiere si returneaza un obiect de tip Category sau null in cazul in care nu s-a putut crea noua categorie.
+![diagrama database](diagram/categoryFactory.JPG)
+#### Crearea unei persoane
+Clasa PersonService contine un atribut de tipul PersonFactory si apeleaza metoda createPerson() pentru a crea o noua persoana confor cu un tip specificat(manager de competitii, antrenor sau sportiv)
+Metoda createPerson() primeste tipul persoanei alaturi de valori pentru instantiere si returneaza un obiect de tip Person sau null in cazul in care nu s-a putut crea noua persoana.
+![diagrama database](diagram/personFactory.JPG)
 ### Conexiunea la baza de date
 #### *Diagrama relațională a bazei de date*
 ![diagrama database](diagram/database.JPG)
+##### Diagrama detaliata a bazei de date
+![diagrama database](diagram/databaseStr.JPG)
 #### *Descrierea structurii bazei de date*
-Baza de date este alcătuită din 6 tabele ce păstrează date despre utilizatori, sportivi, cluburi, competiții și categorii. Mai există și o tabelă de legătură ce 
-#### *Modul de conexiune la baza de date*
-Conexiunea la baza de date se realizează prin design pattern-ul singleton, folosit pentru clasa ConnectionFactory. Acțiunile asupra bazei de date de inserare/editare/ștergere sunt realizate de clasa AbstractDAO. Această clasă este structurată conform pattern-ului facade pentru a oferi o interfață simplificată a operațiilor asupra bazei de date. În acest mod, fiecare entitate(tabel) va extinde clasa AbstractDAO și va accesa metodete de acces la baza de date într-un mod transparent.
+Baza de date este alcătuită din 6 tabele principale si tabele de legatura ce păstrează date despre utilizatori, sportivi, cluburi, competiții și categorii. Mai există și o tabelă de legătură ce 
 ## Testare și depanare
 ### Bug-uri întâmpinate
