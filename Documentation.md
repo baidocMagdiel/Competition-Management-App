@@ -53,6 +53,8 @@ Vizitatorul, adica utilizator temporar,  va avea dreptul de a vizualiza doar rez
 ![diagrama use case antrenor](diagram/diag_clase.JPG)
 ### **Diagrama de pachete**
 ![diagrama database](diagram/diag_pachete.JPG)
+### **Diagrama de secventa**
+![diagrama database](diagram/diag_secventa.JPG)
 ## Design-ul interfeței utilizator
 (se va dezvolta ulterior)
 ### Design patterns: 

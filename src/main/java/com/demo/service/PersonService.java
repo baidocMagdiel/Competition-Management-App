@@ -75,7 +75,6 @@ public class PersonService {
                 return EXISTS + newPerson.getEmail();
             }
         }
-
         personRepository.save(newPerson);
         return SUCCES;
     }
