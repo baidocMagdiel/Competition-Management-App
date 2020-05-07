@@ -1,15 +1,12 @@
 package com.demo.controller;
 
 import com.demo.entity.person.Person;
+import com.demo.entity.person.PersonDto;
 import com.demo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static com.demo.util.Constant.SUCCES;
 
 @RestController
 @RequestMapping(value = "/person")
@@ -21,91 +18,38 @@ public class PersonController {
     /**
      * Metoda pentru crearea unei persoane
      *
-     * @param personType   tipul persoanei
-     * @param firstName    prenume
-     * @param surname      nume de familie
-     * @param address      adresa
-     * @param birthday     data de nastere
-     * @param email        email
-     * @param gender       sex
-     * @param weight       greutate
-     * @param danDegree    grad
-     * @param worldRanking loc in clasamentul mondial
-     * @param bloodType    grupa sanguina
-     * @return mesaj corespunzator
+     * @param personDto persoana ce se doreste creata
+     * @return persoana creata
      */
     @PostMapping(value = "/create")
     @ResponseBody
-    public ResponseEntity<String> create(@RequestParam String personType,
-                                         @RequestParam String firstName,
-                                         @RequestParam String surname,
-                                         @RequestParam String address,
-                                         @RequestParam String birthday,
-                                         @RequestParam String email,
-                                         @RequestParam String gender,
-                                         @RequestParam(defaultValue = "1.5") double weight,
-                                         @RequestParam(defaultValue = "10 Kyu") String danDegree,
-                                         @RequestParam(defaultValue = "0") int worldRanking,
-                                         @RequestParam(defaultValue = "A0") String bloodType) {
-
-        String status = personService.create(personType, firstName, surname, address, birthday, email, gender, weight, danDegree, worldRanking, bloodType);
-        if (!status.equals(SUCCES)) {
-            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>("[INFO]:The person was added.", HttpStatus.OK);
+    public Person create(@RequestBody PersonDto personDto) {
+        return personService.create(personDto);
     }
+
 
     /**
      * Metoda pentru actualizarea unei persoane
      *
-     * @param personType   tipul persoanei
-     * @param firstName    prenume
-     * @param surname      nume de familie
-     * @param address      adresa
-     * @param birthday     data de nastere
-     * @param email        email
-     * @param gender       sex
-     * @param weight       greutate
-     * @param danDegree    grad
-     * @param worldRanking loc in clasamentul mondial
-     * @param bloodType    grupa sanguina
-     * @return mesaj corespunator
+     * @param personDto persoana ce se doreste actualizata
+     * @return
      */
     @PostMapping(value = "/update")
     @ResponseBody
-    public ResponseEntity<String> update(@RequestParam String personType,
-                                         @RequestParam String firstName,
-                                         @RequestParam String surname,
-                                         @RequestParam String address,
-                                         @RequestParam String birthday,
-                                         @RequestParam String email,
-                                         @RequestParam String gender,
-                                         @RequestParam(defaultValue = "1.5") double weight,
-                                         @RequestParam(defaultValue = "10 Kyu") String danDegree,
-                                         @RequestParam(defaultValue = "0") int worldRanking,
-                                         @RequestParam(defaultValue = "A0") String bloodType) {
-
-        String status = personService.updatePerson(personType, firstName, surname, address, birthday, email, gender, weight, danDegree, worldRanking, bloodType);
-        if (!status.equals(SUCCES)) {
-            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>("[INFO]:The person was updated.", HttpStatus.OK);
+    public Person update(@RequestBody PersonDto personDto) {
+        return personService.updatePerson(personDto);
     }
 
     /**
      * Metoda pentru stergerea unei persoane dupa email
      *
      * @param email adresa de email
-     * @return mesaj corespunzator
+     * @return persoana stearsa
      */
     @DeleteMapping(value = "/delete")
     @ResponseBody
-    public ResponseEntity<String> delete(@RequestParam String email) {
-        String status = personService.deleteByEmail(email);
-        if (!status.equals(SUCCES)) {
-            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>("[INFO]:The person was deleted.", HttpStatus.OK);
+    public Person delete(@RequestParam String email) {
+        return personService.deleteByEmail(email);
     }
 
     /**

@@ -1,9 +1,8 @@
 package com.demo.util;
 
-import com.demo.entity.person.Athlete;
-import com.demo.entity.person.Coach;
-import com.demo.entity.person.CompetitionManager;
-import com.demo.entity.person.Person;
+import com.demo.entity.person.*;
+import com.demo.util.exception.AppRequestException;
+import org.springframework.http.HttpStatus;
 
 import java.util.Date;
 
@@ -16,42 +15,30 @@ public class PersonFactory {
 
     /**
      * Metoda pentru crearea unei persoane in functie de tip
-     *
-     * @param personType   tipul persoanei
-     * @param firstName    prenume
-     * @param surname      nume de familie
-     * @param address      adresa
-     * @param birthday     data de nastere
-     * @param email        email
-     * @param gender       sex
-     * @param weight       greutate
-     * @param danDegree    grad
-     * @param worldRanking loc in clasamentul mondial
-     * @param bloodType    grupa sanguina
-     * @return persoana sau null
+     * @param personDto obiect ce contine datele persoanei
+     * @return noua persoana creata
      */
-    public Person createPerson(String personType,
-                               String firstName,
-                               String surname,
-                               String address,
-                               Date birthday,
-                               String email,
-                               String gender,
-                               double weight,
-                               String danDegree,
-                               int worldRanking,
-                               String bloodType) {
+    public Person createPerson(PersonDto personDto) {
 
         Person newPerson = null;
+        String personType = personDto.getType();
+
         if (personType != null) {
 
-            switch (personType) {
+            String surname = personDto.getSurname();
+            String firstName = personDto.getFirstName();
+            String address = personDto.getAddress();
+            String gender = personDto.getGender();
+            String email = personDto.getEmail();
+            Date birthday = personDto.getBirthday();
+
+            switch (personDto.getType() ) {
                 case COACH:
                     newPerson = new Coach(0, surname, firstName, address, gender, birthday, email);
                     break;
 
                 case ATHLETE:
-                    newPerson = new Athlete(0, surname, firstName, address, gender, birthday, email, weight, bloodType, danDegree, worldRanking);
+                    newPerson = new Athlete(0, surname, firstName, address, gender, birthday, email, personDto.getWeight(), personDto.getBloodType(), personDto.getDanDegree(), personDto.getWorldRanking());
                     break;
 
                 case COMPETITION_MANAGER:
@@ -59,8 +46,10 @@ public class PersonFactory {
                     break;
 
                 default:
-                    break;
+                    throw new AppRequestException("Unknown/unsupported person-type: " + personType, HttpStatus.BAD_REQUEST);
             }
+        } else {
+            throw new AppRequestException("Unknown/unsupported person-type", HttpStatus.BAD_REQUEST);
         }
         return newPerson;
     }

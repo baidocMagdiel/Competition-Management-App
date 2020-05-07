@@ -8,6 +8,8 @@ import com.demo.entity.category.SingleCategory;
 import com.demo.entity.category.TeamCategory;
 import com.demo.entity.person.Athlete;
 import com.demo.entity.person.Person;
+import com.demo.util.exception.AppRequestException;
+import org.springframework.http.HttpStatus;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -17,16 +19,16 @@ import static com.demo.util.Constant.*;
 
 public class Validator {
 
-    public static String checkPerson(Person person) {
+    public static boolean checkPerson(Person person){
 
         if (person.getFirstName().isEmpty() || person.getSurname().isEmpty() || person.getEmail().isEmpty() || person.getGender().isEmpty() || person.getAddress().isEmpty()) {
-            return EMPTY_FIELD;
+            throw new AppRequestException(EMPTY_FIELD, HttpStatus.BAD_REQUEST);
         }
 
         if (checkEmail(person.getEmail()) == false) {
-            return EMAIL_INCORRECT;
+            throw new AppRequestException(EMAIL_INCORRECT, HttpStatus.BAD_REQUEST);
         }
-        return SUCCES;
+        return true;
     }
 
     public static boolean checkEmail(String email) {
@@ -38,7 +40,8 @@ public class Validator {
     public static String checkCategory(Category newCategory) {
 
         if (newCategory.getName().isEmpty() || newCategory.getAgeRange().isEmpty()) {
-            return EMPTY_FIELD;
+            throw new AppRequestException(EMPTY_FIELD, HttpStatus.BAD_REQUEST);
+
         }
         return SUCCES;
     }
@@ -46,15 +49,15 @@ public class Validator {
     public static String checkCompetition(Competition newCompetition) {
 
         if (newCompetition.getFederation().isEmpty() || newCompetition.getPlace().isEmpty() || newCompetition.getName().isEmpty()) {
-            return EMPTY_FIELD;
+            throw new AppRequestException(EMPTY_FIELD, HttpStatus.BAD_REQUEST);
         }
 
         if (newCompetition.getStartDate() == null || newCompetition.getEndDate() == null || newCompetition.getLastRegistrationDate() == null) {
-            return EMPTY_FIELD;
+            throw new AppRequestException(EMPTY_FIELD, HttpStatus.BAD_REQUEST);
         }
 
         if (newCompetition.getStartDate().after(newCompetition.getEndDate()) || newCompetition.getLastRegistrationDate().after(newCompetition.getStartDate())) {
-            return ERR_DATE_RANGE;
+            throw new AppRequestException(ERR_DATE_RANGE, HttpStatus.BAD_REQUEST);
         }
         return SUCCES;
     }
