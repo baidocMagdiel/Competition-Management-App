@@ -1,8 +1,11 @@
 package com.demo.util;
 
 import com.demo.entity.category.Category;
+import com.demo.entity.category.CategoryDto;
 import com.demo.entity.category.SingleCategory;
 import com.demo.entity.category.TeamCategory;
+import com.demo.util.exception.AppRequestException;
+import org.springframework.http.HttpStatus;
 
 import static com.demo.util.Constant.INDIVIDUAL;
 import static com.demo.util.Constant.TEAM;
@@ -12,46 +15,37 @@ import static com.demo.util.Constant.TEAM;
  */
 public class CategoryFactory {
 
-    /**
-     * Metoda pentru crearea unei categorii
-     *
-     * @param categoryType    tipul categoriei
-     * @param name            numele
-     * @param ageRange        categorie de varsta
-     * @param gender          gen(sex)
-     * @param catType         gen categorie
-     * @param matchTime       durata meci
-     * @param weightRange     grupa de greutate
-     * @param noOfTeamMembers numarul membrilor din echipa
-     * @param noOfMatches     numarul de meciuri
-     * @return categora sau null
-     */
-    public Category createCategory(String categoryType,
-                                   String name,
-                                   String ageRange,
-                                   String gender,
-                                   String catType,
-                                   float matchTime,
-                                   String weightRange,
-                                   int noOfTeamMembers,
-                                   int noOfMatches) {
+
+    public Category createCategory(CategoryDto categoryDto) {
 
         Category newCategory = null;
-        if (categoryType != null) {
+        String type = categoryDto.getType();
+        if (type != null) {
 
-            switch (categoryType) {
+            String name = categoryDto.getName();
+            String ageRange = categoryDto.getAgeRange();
+            String gender = categoryDto.getGender();
+            String categoryType = categoryDto.getCategoryType();
+            float matchTime = categoryDto.getMatchTime();
+            int noOfTeamMembers = categoryDto.getNoOfTeamMembers();
+            int noOfMatches = categoryDto.getNoOfMatches();
+            String weightRange = categoryDto.getWeightRange();
+
+            switch (type) {
                 case TEAM:
-                    newCategory = new TeamCategory(0, name, ageRange, gender, catType, matchTime, noOfTeamMembers, noOfMatches);
+                    newCategory = new TeamCategory(0, name, ageRange, gender, categoryType, matchTime, noOfTeamMembers, noOfMatches);
                     break;
 
                 case INDIVIDUAL:
-                    newCategory = new SingleCategory(0, name, ageRange, gender, catType, matchTime, weightRange);
+                    newCategory = new SingleCategory(0, name, ageRange, gender, categoryType, matchTime, weightRange);
                     break;
                 default:
-                    break;
+                    throw new AppRequestException("Unknown/unsupported categoty-type: " + type, HttpStatus.BAD_REQUEST);
             }
-        }
 
+        } else {
+            throw new AppRequestException("Unknown/unsupported person-type", HttpStatus.BAD_REQUEST);
+        }
         return newCategory;
     }
 }

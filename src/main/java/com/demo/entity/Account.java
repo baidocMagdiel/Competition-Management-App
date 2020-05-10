@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Account")
-public class Autentification {
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,13 +18,13 @@ public class Autentification {
 
     private String password;
 
-    public Autentification(long autentificationId, Person person, String password) {
+    public Account(long autentificationId, Person person, String password) {
         this.autentificationId = autentificationId;
         this.person = person;
         this.password = password;
     }
 
-    public Autentification() {
+    public Account() {
     }
 
     public long getAutentificationId() {

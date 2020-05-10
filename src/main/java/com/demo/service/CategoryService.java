@@ -1,16 +1,18 @@
 package com.demo.service;
 
 import com.demo.entity.category.Category;
+import com.demo.entity.category.CategoryDto;
 import com.demo.repository.CategoryRepository;
 import com.demo.util.CategoryFactory;
 import com.demo.util.Validator;
+import com.demo.util.exception.AppRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.demo.util.Constant.EXISTS;
-import static com.demo.util.Constant.SUCCES;
+import static com.demo.util.Constant.*;
 
 /**
  * Clasa de service pentru categorie
@@ -23,93 +25,45 @@ public class CategoryService {
 
     CategoryFactory categoryFactory = new CategoryFactory();
 
-    /**
-     * Metoda pentru crearea unei categorii
-     *
-     * @param categoryType    tipul categoriei
-     * @param name            numele categoriei
-     * @param ageRange        intervalul de varsta
-     * @param gender          genul(sexul)
-     * @param catType         tipul probei
-     * @param matchTime       durata unei meci
-     * @param weightRange     categoria de greutate
-     * @param noOfTeamMembers numarul de membri din echipa
-     * @param noOfMatches     numarul de meciuri
-     * @return SUCCES sau mesaj de eroare
-     */
-    public String create(String categoryType,
-                         String name,
-                         String ageRange,
-                         String gender,
-                         String catType,
-                         float matchTime,
-                         String weightRange,
-                         int noOfTeamMembers,
-                         int noOfMatches) {
 
-        Category newCategory = categoryFactory.createCategory(categoryType, name, ageRange, gender, catType, matchTime, weightRange, noOfTeamMembers, noOfMatches);
-        if (newCategory == null) return "[ERROR]:Unknown/unsupported category-type [" + categoryType + "]";
+    public Category create(CategoryDto categoryDto) {
 
-        String flag = Validator.checkCategory(newCategory);
-        if (!flag.equals(SUCCES)) return flag;
+        Category newCategory = categoryFactory.createCategory(categoryDto);
+
+        Validator.checkCategory(newCategory);
 
         List<Category> allCategory = categoryRepository.findAll();
         for (Category c : allCategory) {
-            if (c.getName().equals(name)) {
-                return EXISTS + "category " + newCategory.getName();
+            if (c.getName().equals(categoryDto.getName())) {
+                throw new AppRequestException(CATEGORY_EXISTS, HttpStatus.BAD_REQUEST);
             }
         }
         categoryRepository.save(newCategory);
-        return SUCCES;
+        return newCategory;
     }
 
-    /**
-     * Metoda pentru actualizarea unei categorii
-     *
-     * @param categoryType    tipul categoriei
-     * @param categoryId      id-ul categoriei
-     * @param name            numele categoriei
-     * @param ageRange        intervalul de varsta
-     * @param gender          genul(sexul)
-     * @param catType         tipul probei
-     * @param matchTime       durata unei meci
-     * @param weightRange     categoria de greutate
-     * @param noOfTeamMembers numarul de membri din echipa
-     * @param noOfMatches     numarul de meciuri
-     * @return SUCCES sau mesaj de eroare
-     */
-    public String updateCategory(String categoryType,
-                                 long categoryId,
-                                 String name,
-                                 String ageRange,
-                                 String gender,
-                                 String catType,
-                                 float matchTime,
-                                 String weightRange,
-                                 int noOfTeamMembers,
-                                 int noOfMatches) {
 
-        Category category = categoryRepository.findById(categoryId).orElse(null);
+    public Category updateCategory(CategoryDto categoryDto) {
+
+        Category category = categoryRepository.findById(categoryDto.getId()).orElse(null);
         if (category == null) {
-            return "Category with id " + categoryId + " not found.";
+            throw new AppRequestException("Category with id " + categoryDto.getId() + " not found.", HttpStatus.BAD_REQUEST);
         }
 
-        Category category1 = categoryRepository.findByName(name);
-        if (category1 != null && category1.getCategoryId() != categoryId) {
-            return "[ERROR]:The category with this name " + name + " already exists.";
+        Category category1 = categoryRepository.findByName(categoryDto.getName());
+        if (category1 != null && category1.getCategoryId() != categoryDto.getId()) {
+            throw new AppRequestException("Category with this name " + categoryDto.getName() + " already exists.", HttpStatus.BAD_REQUEST);
         }
 
-        Category newCategory = categoryFactory.createCategory(categoryType, name, ageRange, gender, catType, matchTime, weightRange, noOfTeamMembers, noOfMatches);
-        if (newCategory == null) return "[ERROR]:Unknown/unsupported category-type [" + categoryType + "]";
+        Category newCategory = categoryFactory.createCategory(categoryDto);
 
-        if (newCategory.getClass() != category.getClass()) return "[ERROR]:The category does not have the same type.";
+        if (newCategory.getClass() != category.getClass()) throw new AppRequestException("Category does not have the same type.", HttpStatus.BAD_REQUEST);
 
-        String flag = Validator.checkCategory(newCategory);
-        if (!flag.equals(SUCCES)) return flag;
+        Validator.checkCategory(newCategory);
 
         newCategory.setCategoryId(category.getCategoryId());
         categoryRepository.save(newCategory);
-        return SUCCES;
+        return newCategory;
     }
 
     /**
@@ -118,14 +72,14 @@ public class CategoryService {
      * @param categoryId id-ul categoriei
      * @return SUCCES sau mesaj de eroare
      */
-    public String deleteById(long categoryId) {
+    public Category deleteById(long categoryId) {
 
         Category category = categoryRepository.findById(categoryId).orElse(null);
         if (category == null) {
-            return "Category with id " + categoryId + " not found.";
+            throw new AppRequestException("Category with id " + categoryId + " not found.", HttpStatus.BAD_REQUEST);
         }
         categoryRepository.delete(category);
-        return SUCCES;
+        return category;
     }
 
     /**

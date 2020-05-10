@@ -54,7 +54,11 @@ Vizitatorul, adica utilizator temporar,  va avea dreptul de a vizualiza doar rez
 ### **Diagrama de pachete**
 ![diagrama database](diagram/diag_pachete.JPG)
 ### **Diagrama de secventa**
+Operatia de adaugare a unui sportiv.
 ![diagrama database](diagram/diag_secventa.JPG)
+
+Operatia de adaugare a unei competitii.
+![diagrama database](diagram/diag_secv2.JPG)
 ## Design-ul interfeței utilizator
 (se va dezvolta ulterior)
 ### Design patterns: 

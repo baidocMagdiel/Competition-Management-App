@@ -8,11 +8,12 @@ public final class Constant {
     public static final String VALID = "VALID";
     public static final String ERROR = "ERROR";
     public static final String SUCCES = "The operation was successful.";
-    public static final String EXISTS = "There is already an account for ";
-    public static final String EMPTY_FIELD = "[ERROR]:Required fields are blank/empty.";
-    public static final String EMAIL_INCORRECT = "[ERROR]:The email entered is incorrect.";
-    public static final String ERR_DATE_FORMAT = "[ERROR]:Date format is incorrect.";
-    public static final String ERR_DATE_RANGE = "[ERROR]:Incorrect date range. Check the start date, end date and last registration date.";
+    public static final String EXISTS = "An account for the specified email address already exists. Try another email address.";
+    public static final String CATEGORY_EXISTS = "A category for the specified name already exists. Try another category name.";
+    public static final String EMPTY_FIELD = "Required fields are blank/empty.";
+    public static final String EMAIL_INCORRECT = "Email entered is incorrect.";
+    public static final String ERR_DATE_FORMAT = "Date format is incorrect.";
+    public static final String ERR_DATE_RANGE = "Incorrect date range. Check the start date, end date and last registration date.";
     public static final String DATE_FORMAT = "dd/MM/yyyy";
     public static final String DATE_FORMAT_2 = "dd-M-yyyy hh:mm:ss";
 

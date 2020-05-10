@@ -60,7 +60,7 @@ public class PersonService {
         Person newPerson = personFactory.createPerson(personDto);
 
         if (newPerson.getClass() != person.getClass())
-            throw new AppRequestException("person does not have the same type.\"", HttpStatus.BAD_REQUEST);
+            throw new AppRequestException("Person does not have the same type.", HttpStatus.BAD_REQUEST);
 
         Validator.checkPerson(newPerson);
 

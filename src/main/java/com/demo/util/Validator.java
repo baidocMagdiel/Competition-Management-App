@@ -19,7 +19,7 @@ import static com.demo.util.Constant.*;
 
 public class Validator {
 
-    public static boolean checkPerson(Person person){
+    public static boolean checkPerson(Person person) {
 
         if (person.getFirstName().isEmpty() || person.getSurname().isEmpty() || person.getEmail().isEmpty() || person.getGender().isEmpty() || person.getAddress().isEmpty()) {
             throw new AppRequestException(EMPTY_FIELD, HttpStatus.BAD_REQUEST);
@@ -37,13 +37,13 @@ public class Validator {
         return pat.matcher(email).matches();
     }
 
-    public static String checkCategory(Category newCategory) {
+    public static boolean checkCategory(Category newCategory) {
 
         if (newCategory.getName().isEmpty() || newCategory.getAgeRange().isEmpty()) {
             throw new AppRequestException(EMPTY_FIELD, HttpStatus.BAD_REQUEST);
 
         }
-        return SUCCES;
+        return true;
     }
 
     public static String checkCompetition(Competition newCompetition) {
